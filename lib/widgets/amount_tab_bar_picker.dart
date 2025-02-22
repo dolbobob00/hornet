@@ -3,9 +3,9 @@ import 'package:restful_solid_bloc/src/presentation/cubit/home_page_cubit/cubit/
 
 // ignore: must_be_immutable
 class AmountTabBar extends StatefulWidget {
-  const AmountTabBar({super.key, required this.bloc, this.tag});
+  const AmountTabBar({super.key, required this.bloc, this.tags});
   final AnimePicsCubit bloc;
-  final String? tag;
+  final List<String>? tags;
   @override
   State<AmountTabBar> createState() => _AmountTabBarState();
 }
@@ -26,7 +26,7 @@ class _AmountTabBarState extends State<AmountTabBar> {
                   isNsfw: true,
                   isGif: showGif,
                   amount: 5,
-                  tag: widget.tag,
+                  tags: widget.tags,
                 );
               },
               child: Text(
@@ -39,7 +39,7 @@ class _AmountTabBarState extends State<AmountTabBar> {
                   isNsfw: true,
                   isGif: showGif,
                   amount: 10,
-                  tag: widget.tag,
+                  tags: widget.tags,
                 );
               },
               child: Text(
@@ -52,7 +52,7 @@ class _AmountTabBarState extends State<AmountTabBar> {
                   isNsfw: true,
                   isGif: showGif,
                   amount: 15,
-                  tag: widget.tag,
+                  tags: widget.tags,
                 );
               },
               child: Text(

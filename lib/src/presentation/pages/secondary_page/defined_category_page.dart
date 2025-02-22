@@ -1,28 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:restful_solid_bloc/src/presentation/cubit/home_page_cubit/cubit/anime_pics_cubit.dart';
 import 'package:restful_solid_bloc/widgets/amount_tab_bar_picker.dart';
+import 'package:restful_solid_bloc/widgets/custom_appbar.dart';
 import 'package:restful_solid_bloc/widgets/custom_drawer/my_custom_drawer.dart';
 import 'package:restful_solid_bloc/widgets/custom_loading_circle.dart';
 import 'package:restful_solid_bloc/widgets/image_card/image_card.dart';
 
+import '../../../domain/anime_tags.dart';
+
 class DefinedCategoryPage extends StatelessWidget {
-  const DefinedCategoryPage({super.key, required this.tag});
-  final String tag;
+  const DefinedCategoryPage({super.key, required this.tags});
+  final List<String> tags;
   @override
   Widget build(BuildContext context) {
-    print(tag);
     final bloc = BlocProvider.of<AnimePicsCubit>(context)..clearState();
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Page with \'$tag\' category'),
+      appBar: CustomAppbar(
+        title: '${tags}',
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              GetIt.I<AnimeTagsImpl>().clearTags();
+            },
+            child: Text(
+              'clear tag\'s',
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              GetIt.I<AnimeTagsImpl>().clearTags(exceptTags: [tags.last]);
+            },
+            child: Text(
+              'clear tag\'s except last',
+            ),
+          ),
+        ],
+        titleStyle: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
       ),
       drawer: const MyCustomDrawer(),
       body: Stack(
         children: [
           AmountTabBar(
             bloc: bloc,
-            tag: tag,
+            tags: tags,
           ),
           Center(
             child: Column(
@@ -116,7 +141,7 @@ class DefinedCategoryPage extends StatelessWidget {
                         bloc.fetchOnePicture(
                           isNsfw: true,
                           isGif: true,
-                          tag: tag,
+                          tag: tags,
                         );
                       } catch (e) {
                         print(e);
@@ -132,7 +157,7 @@ class DefinedCategoryPage extends StatelessWidget {
                         bloc.fetchOnePicture(
                           isNsfw: true,
                           isGif: false,
-                          tag: tag,
+                          tag: tags,
                         );
                       } catch (e) {
                         print(e);

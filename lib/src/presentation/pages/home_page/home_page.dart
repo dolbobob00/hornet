@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:restful_solid_bloc/src/domain/anime_tags.dart';
 import 'package:restful_solid_bloc/src/presentation/cubit/home_page_cubit/cubit/anime_pics_cubit.dart';
 
 import 'package:restful_solid_bloc/widgets/image_card/image_card.dart';
 import 'package:restful_solid_bloc/widgets/amount_tab_bar_picker.dart';
 
+import '../../../../widgets/custom_appbar.dart';
 import '../../../../widgets/custom_drawer/my_custom_drawer.dart';
 import '../../../../widgets/custom_loading_circle.dart';
-
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -16,8 +18,26 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<AnimePicsCubit>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Page'),
+      appBar: CustomAppbar(
+        title: 'Home Page',
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              GetIt.I<AnimeTagsImpl>().clearTags();
+            },
+            child: Text(
+              'remove tag\'s',
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {},
+          ),
+        ],
+        titleStyle: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
       ),
       drawer: const MyCustomDrawer(),
       body: Stack(
