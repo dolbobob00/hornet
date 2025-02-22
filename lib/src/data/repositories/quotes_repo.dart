@@ -31,7 +31,7 @@ class QuotesRepositoryImpl implements QuotesRepository {
       );
 
       if (response.statusCode == 200) {
-        final data = json.decode(response.data);
+        final data = response.data;
        
         return data;
       } else {

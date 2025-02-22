@@ -18,6 +18,12 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<AnimePicsCubit>(context);
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        heroTag: 'btn3',
+        child: const Icon(Icons.upcoming),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: CustomAppbar(
         title: 'Home Page',
         actions: [
@@ -40,7 +46,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
       drawer: const MyCustomDrawer(),
-      body: Stack(
+      body: Column(
         children: [
           AmountTabBar(bloc: bloc),
           Center(
@@ -119,50 +125,50 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-            right: 16,
-            bottom: 16,
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                spacing: 4,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  FloatingActionButton(
-                    heroTag: 'btn1',
-                    onPressed: () {
-                      try {
-                        bloc.fetchOnePicture(
-                          isNsfw: true,
-                          isGif: true,
-                        );
-                      } catch (e) {
-                        print(e);
-                      }
-                    },
-                    child: const Icon(Icons.gif),
-                  ),
-                  const SizedBox(height: 8),
-                  FloatingActionButton(
-                    heroTag: 'btn2',
-                    onPressed: () {
-                      try {
-                        bloc.fetchOnePicture(
-                          isNsfw: true,
-                          isGif: false,
-                        );
-                      } catch (e) {
-                        print(e);
-                      }
-                    },
-                    child: const Icon(Icons.image),
-                  ),
-                ],
-              ),
-            ),
-          ),
         ],
       ),
     );
   }
 }
+// Positioned(
+//             right: 16,
+//             bottom: 16,
+//             child: Padding(
+//               padding: const EdgeInsets.all(12.0),
+//               child: Column(
+//                 spacing: 4,
+//                 mainAxisSize: MainAxisSize.min,
+//                 children: [
+//                   FloatingActionButton(
+//                     heroTag: 'btn1',
+//                     onPressed: () {
+//                       try {
+//                         bloc.fetchOnePicture(
+//                           isNsfw: true,
+//                           isGif: true,
+//                         );
+//                       } catch (e) {
+//                         print(e);
+//                       }
+//                     },
+//                     child: const Icon(Icons.gif),
+//                   ),
+//                   const SizedBox(height: 8),
+//                   FloatingActionButton(
+//                     heroTag: 'btn2',
+//                     onPressed: () {
+//                       try {
+//                         bloc.fetchOnePicture(
+//                           isNsfw: true,
+//                           isGif: false,
+//                         );
+//                       } catch (e) {
+//                         print(e);
+//                       }
+//                     },
+//                     child: const Icon(Icons.image),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),

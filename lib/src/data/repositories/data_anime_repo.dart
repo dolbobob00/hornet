@@ -76,13 +76,13 @@ class DataAnimeRepository implements IAnimeRepository {
         },
       );
       if (response.statusCode == 200) {
-        return json.decode(response.data) as Map<String, dynamic>;
+        return response.data;
       } else {
         throw Exception('Failed to load anime details');
       }
-    } catch (e) {}
-
-    return await {'': ''};
+    } catch (e) {
+      throw Exception('Network error: $e');
+    }
   }
 
   @override
@@ -96,7 +96,7 @@ class DataAnimeRepository implements IAnimeRepository {
         queryParameters: {'full': 'true'},
       );
       if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.data);
+        final Map<String, dynamic> data = response.data;
         categoryInfo = data;
         return data;
       } else {

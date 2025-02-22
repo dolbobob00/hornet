@@ -18,22 +18,20 @@ class DefinedCategoryPage extends StatelessWidget {
     final bloc = BlocProvider.of<AnimePicsCubit>(context)..clearState();
     return Scaffold(
       appBar: CustomAppbar(
-        title: '${tags}',
+        title: '$tags',
         actions: [
           ElevatedButton(
             onPressed: () {
-              GetIt.I<AnimeTagsImpl>().clearTags();
+              GetIt.I<IAnimeTags>().clearTags();
             },
             child: Text(
               'clear tag\'s',
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              GetIt.I<AnimeTagsImpl>().clearTags(exceptTags: [tags.last]);
-            },
-            child: Text(
-              'clear tag\'s except last',
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.settings,
             ),
           ),
         ],
@@ -43,7 +41,7 @@ class DefinedCategoryPage extends StatelessWidget {
         ),
       ),
       drawer: const MyCustomDrawer(),
-      body: Stack(
+      body: Column(
         children: [
           AmountTabBar(
             bloc: bloc,
@@ -105,18 +103,20 @@ class DefinedCategoryPage extends StatelessWidget {
                         size: 100.0,
                       );
                     }
-                    return Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius: BorderRadius.circular(
-                          25,
+                    return Center(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(),
+                          borderRadius: BorderRadius.circular(
+                            25,
+                          ),
                         ),
-                      ),
-                      child: Text(
-                        'Be carefull! This is a NSFW content!',
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.red,
+                        child: Text(
+                          'Be carefull! This is a NSFW content!',
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.red,
+                          ),
                         ),
                       ),
                     );
@@ -125,50 +125,7 @@ class DefinedCategoryPage extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-            right: 16,
-            bottom: 16,
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                spacing: 4,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  FloatingActionButton(
-                    heroTag: 'btn1',
-                    onPressed: () {
-                      try {
-                        bloc.fetchOnePicture(
-                          isNsfw: true,
-                          isGif: true,
-                          tag: tags,
-                        );
-                      } catch (e) {
-                        print(e);
-                      }
-                    },
-                    child: const Icon(Icons.gif),
-                  ),
-                  const SizedBox(height: 8),
-                  FloatingActionButton(
-                    heroTag: 'btn2',
-                    onPressed: () {
-                      try {
-                        bloc.fetchOnePicture(
-                          isNsfw: true,
-                          isGif: false,
-                          tag: tags,
-                        );
-                      } catch (e) {
-                        print(e);
-                      }
-                    },
-                    child: const Icon(Icons.image),
-                  ),
-                ],
-              ),
-            ),
-          ),
+         
         ],
       ),
     );

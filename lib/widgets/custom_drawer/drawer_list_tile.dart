@@ -5,10 +5,12 @@ class DrawerListTile extends StatelessWidget {
   const DrawerListTile({
     super.key,
     required this.name,
+    required this.onTap,
     required this.description,
   });
   final String name;
   final String description;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +25,7 @@ class DrawerListTile extends StatelessWidget {
         maxLines: 3,
         overflow: TextOverflow.ellipsis,
       ),
-      onTap: () {
-        context.goNamed(
-          'category',
-          extra: name,
-        );
-        Navigator.pop(context);
-      },
+      onTap: onTap,
     );
   }
 }

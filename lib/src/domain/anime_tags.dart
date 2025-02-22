@@ -3,7 +3,7 @@ abstract class IAnimeTags {
 
   set changeAllTagsTo(List<String> value);
 
-  void clearTags() {}
+  void clearTags({List<String>? exceptTags}) {}
 
   void addTag({required String tag}) {}
 
@@ -39,12 +39,4 @@ class AnimeTagsImpl implements IAnimeTags {
   void deleteTag({required String tag}) {
     _tags.remove(tag);
   }
-}
-
-class Tag {
-  final map = {
-    'tags': [],
-    'except': [],
-   
-  };
 }
