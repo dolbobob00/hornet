@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
         actions: [
           ElevatedButton(
             onPressed: () {
-              GetIt.I<AnimeTagsImpl>().clearTags();
+              GetIt.I<IAnimeTags>().clearTags();
             },
             child: Text(
               'remove tag\'s',
