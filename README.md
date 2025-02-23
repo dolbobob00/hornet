@@ -40,7 +40,7 @@ A Flutter application that demonstrates clean architecture, SOLID principles, an
 
 1. Clone the repository:
 ```bash
-git clone https://your-repository-url.git
+git clone https://github.com/dolbobob00/hornet.git
 ```
 
 2. Install dependencies:
