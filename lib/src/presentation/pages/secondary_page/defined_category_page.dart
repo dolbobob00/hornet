@@ -7,6 +7,7 @@ import 'package:restful_solid_bloc/widgets/custom_appbar.dart';
 import 'package:restful_solid_bloc/widgets/custom_drawer/my_custom_drawer.dart';
 import 'package:restful_solid_bloc/widgets/custom_loading_circle.dart';
 import 'package:restful_solid_bloc/widgets/image_card/image_card.dart';
+import 'package:restful_solid_bloc/widgets/nsfw_sfw_row_fab.dart';
 
 import '../../../domain/anime_tags.dart';
 
@@ -17,6 +18,8 @@ class DefinedCategoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<AnimePicsCubit>(context)..clearState();
     return Scaffold(
+      floatingActionButton: NsfwSfwRowFab(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: CustomAppbar(
         title: '$tags',
         actions: [

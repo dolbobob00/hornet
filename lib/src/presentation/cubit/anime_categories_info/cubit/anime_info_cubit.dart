@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:meta/meta.dart';
-import 'package:restful_solid_bloc/src/data/constants.dart';
 
 import '../../../../data/repositories/data_anime_repo.dart';
 

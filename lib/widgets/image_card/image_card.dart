@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:restful_solid_bloc/src/domain/downloader.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../cached_image.dart';
+import '../download_button.dart';
 
 class ImageCard extends StatelessWidget {
   const ImageCard(
@@ -66,7 +69,8 @@ class ImageCard extends StatelessWidget {
                                   ),
                                 ),
                                 const TextSpan(
-                                  text: '\n (tap to open, sometimes page may not exist)',
+                                  text:
+                                      '\n (tap to open, sometimes page may not exist)',
                                   style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: 10,
@@ -93,6 +97,9 @@ class ImageCard extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.share),
               onPressed: () {},
+            ),
+            DownloadButton(
+              url: imageUrl,
             ),
           ],
         )
