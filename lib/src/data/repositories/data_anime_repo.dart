@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
 
 // Interface segregation principle (I in SOLID)
 abstract class IAnimeRepository {
@@ -11,35 +10,21 @@ abstract class IAnimeRepository {
     int? amount,
     List<String>? tags,
   });
-  void dispose();
 }
 
 // Single responsibility principle (S in SOLID)
 class DataAnimeRepository implements IAnimeRepository {
   final String baseUrl;
-  final http.Client _client;
+
   Map<String, dynamic> categoryInfo = {};
 
   // Singleton implementation
   static DataAnimeRepository? _instance;
 
   // Private constructor
-  DataAnimeRepository._internal({
+  DataAnimeRepository({
     required this.baseUrl,
-    http.Client? client,
-  }) : _client = client ?? http.Client();
-
-  // Factory constructor
-  factory DataAnimeRepository({
-    required String baseUrl,
-    http.Client? client,
-  }) {
-    _instance ??= DataAnimeRepository._internal(
-      baseUrl: baseUrl,
-      client: client,
-    );
-    return _instance!;
-  }
+  });
 
   // Instance getter
   static DataAnimeRepository get instance {
@@ -47,12 +32,6 @@ class DataAnimeRepository implements IAnimeRepository {
       throw StateError('Repository must be initialized with baseUrl first');
     }
     return _instance!;
-  }
-
-  // Reset instance (useful for testing)
-  static void reset() {
-    _instance?.dispose();
-    _instance = null;
   }
 
   // Open-closed principle (O in SOLID) - extensible but closed for modification
@@ -67,9 +46,9 @@ class DataAnimeRepository implements IAnimeRepository {
       // Create base query parameters
       final Map<String, dynamic> queryParams = {
         'limit': amount?.toString() ?? '2',
-        'is_nsfw': isNsfw ? 'true' : 'false', 
-        'gif': isGif ? 'true' : 'false', 
-        'included_tags': tags??[]
+        'is_nsfw': isNsfw ? 'true' : 'false',
+        'gif': isGif ? 'true' : 'false',
+        'included_tags': tags ?? []
       };
 
       final response = await GetIt.I<Dio>().get(
@@ -109,12 +88,5 @@ class DataAnimeRepository implements IAnimeRepository {
     } catch (e) {
       throw Exception('Network error: $e');
     }
-  }
-
-  // Liskov substitution principle (L in SOLID) is satisfied
-  // as this class fully implements the IAnimeRepository interface
-  @override
-  void dispose() {
-    _client.close();
   }
 }
