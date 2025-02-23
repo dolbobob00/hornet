@@ -64,8 +64,6 @@ class UrlServiceImpl implements IUrlService {
           followRedirects: true,
         ),
       );
-  //check
-  
       if (response.data == null) {
         await shareUri(imageUrl: imageUrl);
         return;
