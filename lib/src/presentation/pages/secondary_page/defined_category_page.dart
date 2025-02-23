@@ -135,7 +135,7 @@ class DefinedCategoryPage extends StatelessWidget {
                           ),
                         ],
                       );
-                      // state.message
+                     
                     } else if (state is AnimePicsLoading) {
                       return const CustomLoadingCircle(
                         size: 100.0,

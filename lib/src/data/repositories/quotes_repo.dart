@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'dart:convert';
 import 'package:restful_solid_bloc/src/data/constants.dart';
 
 // Abstract class defining the contract (Interface Segregation Principle)

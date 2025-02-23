@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 // Interface segregation principle (I in SOLID)
 abstract class IAnimeRepository {
