@@ -10,6 +10,7 @@ import 'package:restful_solid_bloc/widgets/amount_tab_bar_picker.dart';
 import '../../../../widgets/custom_appbar.dart';
 import '../../../../widgets/custom_drawer/my_custom_drawer.dart';
 import '../../../../widgets/custom_loading_circle.dart';
+import '../../../../widgets/nsfw_sfw_row_fab.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -18,12 +19,14 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<AnimePicsCubit>(context);
     return Scaffold(
+      floatingActionButton: NsfwSfwRowFab(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: CustomAppbar(
         title: 'Home Page',
         actions: [
           ElevatedButton(
             onPressed: () {
-              GetIt.I<AnimeTagsImpl>().clearTags();
+              GetIt.I<IAnimeTags>().clearTags();
             },
             child: Text(
               'remove tag\'s',
@@ -40,7 +43,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
       drawer: const MyCustomDrawer(),
-      body: Stack(
+      body: Column(
         children: [
           AmountTabBar(bloc: bloc),
           Center(
@@ -93,7 +96,41 @@ class HomePage extends StatelessWidget {
                         ),
                       );
                     } else if (state is AnimePictureError) {
-                      return Text(state.message);
+                      return Column(
+                        children: [
+                          Text(
+                            'Problem was caught.',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium
+                                ?.copyWith(
+                                  color: Colors.red,
+                                ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                              'Try to clear tag\'s, add tag\'s by one per time, sometimes base doesnt have multiple tag\'s like \n "Maid + Gif + Oppai"',
+                              maxLines: 3,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ),
+                          ExpansionTile(
+                            leading: Icon(
+                              Icons.error,
+                            ),
+                            iconColor: Theme.of(context).colorScheme.error,
+                            title: Text(
+                              'See full error code',
+                            ),
+                            children: [
+                              Text(
+                                state.message,
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
                     } else if (state is AnimePicsLoading) {
                       return const CustomLoadingCircle(
                         size: 100.0,
@@ -117,48 +154,6 @@ class HomePage extends StatelessWidget {
                   },
                 )
               ],
-            ),
-          ),
-          Positioned(
-            right: 16,
-            bottom: 16,
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                spacing: 4,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  FloatingActionButton(
-                    heroTag: 'btn1',
-                    onPressed: () {
-                      try {
-                        bloc.fetchOnePicture(
-                          isNsfw: true,
-                          isGif: true,
-                        );
-                      } catch (e) {
-                        print(e);
-                      }
-                    },
-                    child: const Icon(Icons.gif),
-                  ),
-                  const SizedBox(height: 8),
-                  FloatingActionButton(
-                    heroTag: 'btn2',
-                    onPressed: () {
-                      try {
-                        bloc.fetchOnePicture(
-                          isNsfw: true,
-                          isGif: false,
-                        );
-                      } catch (e) {
-                        print(e);
-                      }
-                    },
-                    child: const Icon(Icons.image),
-                  ),
-                ],
-              ),
             ),
           ),
         ],

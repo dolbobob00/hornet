@@ -1,9 +1,11 @@
 abstract class IAnimeTags {
   List<String> get tags;
-
+  bool get showGif;
   set changeAllTagsTo(List<String> value);
 
-  void clearTags() {}
+  set changeShowGif(bool value);
+
+  void clearTags({List<String>? exceptTags}) {}
 
   void addTag({required String tag}) {}
 
@@ -12,9 +14,13 @@ abstract class IAnimeTags {
 
 class AnimeTagsImpl implements IAnimeTags {
   List<String> _tags = [];
+  bool _showGif = false;
 
   @override
   List<String> get tags => _tags;
+
+  @override
+  bool get showGif => _showGif;
 
   @override
   set changeAllTagsTo(List<String> value) => _tags = value;
@@ -39,12 +45,9 @@ class AnimeTagsImpl implements IAnimeTags {
   void deleteTag({required String tag}) {
     _tags.remove(tag);
   }
-}
 
-class Tag {
-  final map = {
-    'tags': [],
-    'except': [],
-   
-  };
+  @override
+  set changeShowGif(bool value) {
+    _showGif = value;
+  }
 }

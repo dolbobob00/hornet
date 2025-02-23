@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:restful_solid_bloc/src/domain/anime_tags.dart';
 import 'package:restful_solid_bloc/src/presentation/cubit/home_page_cubit/cubit/anime_pics_cubit.dart';
 
 // ignore: must_be_immutable
@@ -11,7 +13,6 @@ class AmountTabBar extends StatefulWidget {
 }
 
 class _AmountTabBarState extends State<AmountTabBar> {
-  bool showGif = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -24,7 +25,7 @@ class _AmountTabBarState extends State<AmountTabBar> {
               onPressed: () {
                 widget.bloc.fetchMultiplePictures(
                   isNsfw: true,
-                  isGif: showGif,
+                  isGif: GetIt.I<IAnimeTags>().showGif,
                   amount: 5,
                   tags: widget.tags,
                 );
@@ -37,7 +38,7 @@ class _AmountTabBarState extends State<AmountTabBar> {
               onPressed: () {
                 widget.bloc.fetchMultiplePictures(
                   isNsfw: true,
-                  isGif: showGif,
+                  isGif: GetIt.I<IAnimeTags>().showGif,
                   amount: 10,
                   tags: widget.tags,
                 );
@@ -50,7 +51,7 @@ class _AmountTabBarState extends State<AmountTabBar> {
               onPressed: () {
                 widget.bloc.fetchMultiplePictures(
                   isNsfw: true,
-                  isGif: showGif,
+                  isGif: GetIt.I<IAnimeTags>().showGif,
                   amount: 15,
                   tags: widget.tags,
                 );
@@ -69,11 +70,11 @@ class _AmountTabBarState extends State<AmountTabBar> {
                   ),
                 ),
                 Switch.adaptive(
-                  value: showGif,
+                  value: GetIt.I<IAnimeTags>().showGif,
                   onChanged: (value) {
                     setState(
                       () {
-                        showGif = value;
+                        GetIt.I<IAnimeTags>().changeShowGif = value;
                       },
                     );
                   },

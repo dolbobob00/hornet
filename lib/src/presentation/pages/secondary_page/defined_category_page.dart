@@ -7,6 +7,7 @@ import 'package:restful_solid_bloc/widgets/custom_appbar.dart';
 import 'package:restful_solid_bloc/widgets/custom_drawer/my_custom_drawer.dart';
 import 'package:restful_solid_bloc/widgets/custom_loading_circle.dart';
 import 'package:restful_solid_bloc/widgets/image_card/image_card.dart';
+import 'package:restful_solid_bloc/widgets/nsfw_sfw_row_fab.dart';
 
 import '../../../domain/anime_tags.dart';
 
@@ -17,23 +18,23 @@ class DefinedCategoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<AnimePicsCubit>(context)..clearState();
     return Scaffold(
+      floatingActionButton: NsfwSfwRowFab(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: CustomAppbar(
-        title: '${tags}',
+        title: '$tags',
         actions: [
           ElevatedButton(
             onPressed: () {
-              GetIt.I<AnimeTagsImpl>().clearTags();
+              GetIt.I<IAnimeTags>().clearTags();
             },
             child: Text(
               'clear tag\'s',
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              GetIt.I<AnimeTagsImpl>().clearTags(exceptTags: [tags.last]);
-            },
-            child: Text(
-              'clear tag\'s except last',
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.settings,
             ),
           ),
         ],
@@ -43,7 +44,7 @@ class DefinedCategoryPage extends StatelessWidget {
         ),
       ),
       drawer: const MyCustomDrawer(),
-      body: Stack(
+      body: Column(
         children: [
           AmountTabBar(
             bloc: bloc,
@@ -99,74 +100,67 @@ class DefinedCategoryPage extends StatelessWidget {
                         ),
                       );
                     } else if (state is AnimePictureError) {
-                      return Text(state.message);
+                      return Column(
+                        children: [
+                          Text(
+                            'Problem was caught.',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium
+                                ?.copyWith(
+                                  color: Colors.red,
+                                ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                              'Try to clear tag\'s, add tag\'s by one per time, sometimes base doesnt have multiple tag\'s like \n "Maid + Gif + Oppai"',
+                              maxLines: 3,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ),
+                          ExpansionTile(
+                            leading: Icon(
+                              Icons.error,
+                            ),
+                            iconColor: Theme.of(context).colorScheme.error,
+                            title: Text(
+                              'See full error code',
+                            ),
+                            children: [
+                              Text(
+                                state.message,
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                     
                     } else if (state is AnimePicsLoading) {
                       return const CustomLoadingCircle(
                         size: 100.0,
                       );
                     }
-                    return Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius: BorderRadius.circular(
-                          25,
+                    return Center(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(),
+                          borderRadius: BorderRadius.circular(
+                            25,
+                          ),
                         ),
-                      ),
-                      child: Text(
-                        'Be carefull! This is a NSFW content!',
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.red,
+                        child: Text(
+                          'Be carefull! This is a NSFW content!',
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.red,
+                          ),
                         ),
                       ),
                     );
                   },
                 )
               ],
-            ),
-          ),
-          Positioned(
-            right: 16,
-            bottom: 16,
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                spacing: 4,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  FloatingActionButton(
-                    heroTag: 'btn1',
-                    onPressed: () {
-                      try {
-                        bloc.fetchOnePicture(
-                          isNsfw: true,
-                          isGif: true,
-                          tag: tags,
-                        );
-                      } catch (e) {
-                        print(e);
-                      }
-                    },
-                    child: const Icon(Icons.gif),
-                  ),
-                  const SizedBox(height: 8),
-                  FloatingActionButton(
-                    heroTag: 'btn2',
-                    onPressed: () {
-                      try {
-                        bloc.fetchOnePicture(
-                          isNsfw: true,
-                          isGif: false,
-                          tag: tags,
-                        );
-                      } catch (e) {
-                        print(e);
-                      }
-                    },
-                    child: const Icon(Icons.image),
-                  ),
-                ],
-              ),
             ),
           ),
         ],

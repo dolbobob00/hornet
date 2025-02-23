@@ -41,23 +41,19 @@ class _CustomLoadingCircleState extends State<CustomLoadingCircle>
 
     return RotationTransition(
       turns: _controller,
-      child: CircleAvatar(
-        radius: adaptiveSize / 2,
-        backgroundColor: Colors.transparent,
-        child: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: Colors.blue, // You can change border color
-              width: 2.0, // You can adjust border width
-            ),
-          ),
-          child: Image.asset(
+      child: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(color: Colors.blue[300] ?? Colors.blue, width: 2),
+        ),
+        child: CircleAvatar(
+          radius: adaptiveSize / 2,
+          foregroundImage: Image.asset(
             widget.gifPath!,
             width: adaptiveSize,
             height: adaptiveSize,
             fit: BoxFit.cover,
-          ),
+          ).image,
         ),
       ),
     );

@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'dart:convert';
 import 'package:restful_solid_bloc/src/data/constants.dart';
 
 // Abstract class defining the contract (Interface Segregation Principle)
@@ -31,7 +30,7 @@ class QuotesRepositoryImpl implements QuotesRepository {
       );
 
       if (response.statusCode == 200) {
-        final data = json.decode(response.data);
+        final data = response.data;
        
         return data;
       } else {

@@ -60,36 +60,36 @@ class AnimePicsCubit extends Cubit<AnimePicsState> {
     }
   }
 
-  void fetchOnePicture(
-      {required bool isNsfw, required bool isGif, List<String>? tag}) async {
-    emit(
-      AnimePicsLoading(),
-    );
+  void fetchOnePicture({
+    required bool isNsfw,
+    required bool isGif,
+    List<String>? tag,
+  }) async {
+    emit(AnimePicsLoading());
 
     try {
-      final responce = await repository.getAnimeMedia(
-        isNsfw: true,
-        isGif: false,
-        tags: tag,
+      final response = await repository.getAnimeMedia(
+        isNsfw: isNsfw,
+        isGif: isGif,
+        amount: 2,
+        tags: tag?.isNotEmpty == true ? tag : null, // Only pass tags if not empty
       );
-      final responceInfo = responce.entries.first.value;
-      final String? pictureUrl = responceInfo[0]['url'];
-      final String? uploadedAt = responceInfo[0]['uploaded_at'];
-      final String? source = responceInfo[0]['source'];
-      emit(
-        AnimePictureState(
-          pictureUrl: pictureUrl ??
-              'https://sun9-46.userapi.com/impg/BCmh7rC0xExv7oZtMff-2B8MwfI09gdG1dU_TQ/TxWR5NqwKYw.jpg?size=360x600&quality=96&sign=b174efa120e35c9d79d5c0eb6dab18a0&c_uniq_tag=PT96NrYbjWnlEzaoyM0lwEdvaG_eyhvFWkCEJyQdhDg&type=album',
-          uploadedAt: uploadedAt ?? 'Unknown',
-          source: source ?? 'Unknown',
-        ),
-      );
+      
+      final responseInfo = response['images'] ?? []; // Use proper key from API
+      if (responseInfo.isEmpty) {
+        throw Exception('No images found');
+      }
+
+      final imageData = responseInfo[0];
+      emit(AnimePictureState(
+        pictureUrl: imageData['url'] ?? 'fallback_url',
+        uploadedAt: imageData['uploaded_at'] ?? 'Unknown',
+        source: imageData['source'] ?? 'Unknown',
+      ));
     } catch (e) {
-      emit(
-        AnimePictureError(
-          message: 'Failed to fetch picture $e',
-        ),
-      );
+      emit(AnimePictureError(
+        message: 'Failed to fetch picture: ${e.toString()}',
+      ));
     }
   }
 }
