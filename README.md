@@ -8,6 +8,7 @@ A Flutter application that demonstrates clean architecture, SOLID principles, an
 - Support for both static images and GIFs
 - Image source and upload date display
 - Multiple images loading support
+- Share + Download different type's of media 
 - Tag-based image filtering
 - Quotes feature using [API Ninjas](https://api-ninjas.com)
 - Responsive UI with custom app bar and drawer
@@ -23,13 +24,17 @@ A Flutter application that demonstrates clean architecture, SOLID principles, an
 
 ## Dependencies
 
-- bloc: ^9.0.0
-- flutter_bloc: ^9.0.0
-- get_it: ^8.0.3
-- dio: ^5.8.0+1
-- cached_network_image: ^3.3.0
-- go_router: ^14.8.0
-- url_launcher: ^6.3.1
+ - bloc: ^9.0.0
+ - share_plus: ^10.1.4
+ - cached_network_image: ^3.3.0
+ - flutter_file_downloader: ^2.0.0
+ - dio: ^5.8.0+1
+ - flutter_bloc: ^9.0.0
+ - get_it: ^8.0.3
+ - go_router: ^14.8.0
+ - http: ^1.3.0
+ - path_provider: ^2.1.2
+ - url_launcher: ^6.3.1
 
 ## Getting Started
 
@@ -48,26 +53,7 @@ flutter pub get
 4. Run the app:
 ```bash
 flutter run
-```
 
-## Project Structure
-
-```
-lib/
-├── main.dart
-├── src/
-│   ├── app.dart
-│   ├── data/
-│   │   ├── constants.dart
-│   │   └── repositories/
-│   ├── domain/
-│   │   └── service_locator.dart
-│   └── presentation/
-│       ├── cubit/
-│       └── pages/
-└── widgets/
-    ├── custom_appbar.dart
-    └── custom_drawer/
 ```
 
 ## License
@@ -93,3 +79,4 @@ Dependencies are licensed under their respective licenses:
 
 This application contains NSFW content and is intended for mature audiences only.
 All images are provided by third-party APIs and we do not claim ownership of any content displayed in the application.
+=======
