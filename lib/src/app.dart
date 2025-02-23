@@ -24,7 +24,7 @@ class MainApp extends StatelessWidget {
         )
       ],
       child: MaterialApp.router(
-        title: 'Main App',
+        title: 'Hornet(Love Rem)',
         routerConfig: routes.routerConfig,
         theme: ThemeData(
           primarySwatch: Colors.indigo,

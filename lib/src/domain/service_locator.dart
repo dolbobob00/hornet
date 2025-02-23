@@ -24,9 +24,6 @@ class GetItServiceLocator implements IServiceLocator {
     getIt.registerLazySingleton<IAnimeTags>(
       () => AnimeTagsImpl(),
     );
-    getIt.registerLazySingleton<IDownloader>(
-      () => FileDownloaderImpl(),
-    );
     getIt.registerLazySingleton<IAnimeRepository>(
       () => DataAnimeRepository(
         baseUrl: getIt<Constants>().animeFetchUrl,

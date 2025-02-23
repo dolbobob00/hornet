@@ -15,12 +15,12 @@ class _DownloadButtonState extends State<DownloadButton> {
   double? _progress;
   @override
   Widget build(BuildContext context) {
-    return _progress != null
+    return _progress != null && _progress! < 101
         ? Column(
             children: [
               CircularProgressIndicator(),
               Text(
-                _progress.toString(),
+                '${_progress!.toInt()}%',
               ),
             ],
           )
@@ -35,7 +35,6 @@ class _DownloadButtonState extends State<DownloadButton> {
                     );
                     _progress = null;
                   });
-                  print(path);
                 },
                 onProgress: (fileName, progress) {
                   setState(() {
