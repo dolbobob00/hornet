@@ -24,17 +24,17 @@ A Flutter application that demonstrates clean architecture, SOLID principles, an
 
 ## Dependencies
 
-  bloc: ^9.0.0
-  share_plus: ^10.1.4
-  cached_network_image: ^3.3.0
-  flutter_file_downloader: ^2.0.0
-  dio: ^5.8.0+1
-  flutter_bloc: ^9.0.0
-  get_it: ^8.0.3
-  go_router: ^14.8.0
-  http: ^1.3.0
-  path_provider: ^2.1.2
-  url_launcher: ^6.3.1
+ - bloc: ^9.0.0
+ - share_plus: ^10.1.4
+ - cached_network_image: ^3.3.0
+ - flutter_file_downloader: ^2.0.0
+ - dio: ^5.8.0+1
+ - flutter_bloc: ^9.0.0
+ - get_it: ^8.0.3
+ - go_router: ^14.8.0
+ - http: ^1.3.0
+ - path_provider: ^2.1.2
+ - url_launcher: ^6.3.1
 
 ## Getting Started
 
