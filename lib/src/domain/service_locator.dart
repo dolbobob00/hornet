@@ -4,7 +4,7 @@ import 'package:restful_solid_bloc/src/data/constants.dart';
 import 'package:restful_solid_bloc/src/data/repositories/data_anime_repo.dart';
 import 'package:restful_solid_bloc/src/data/repositories/quotes_repo.dart';
 import 'package:restful_solid_bloc/src/domain/anime_tags.dart';
-import 'package:restful_solid_bloc/src/domain/downloader.dart';
+import 'package:restful_solid_bloc/src/domain/url_service.dart';
 
 abstract class IServiceLocator {
   void getItSetup();
@@ -23,6 +23,9 @@ class GetItServiceLocator implements IServiceLocator {
     );
     getIt.registerLazySingleton<IAnimeTags>(
       () => AnimeTagsImpl(),
+    );
+    getIt.registerLazySingleton<IUrlService>(
+      () => UrlServiceImpl(),
     );
     getIt.registerLazySingleton<IAnimeRepository>(
       () => DataAnimeRepository(
