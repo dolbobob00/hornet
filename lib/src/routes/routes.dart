@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:restful_solid_bloc/src/domain/anime_tags.dart';
 import 'package:restful_solid_bloc/src/presentation/pages/secondary_page/defined_category_page.dart';
 import 'package:restful_solid_bloc/src/presentation/pages/splash_screen/splash_screen.dart';
 
@@ -31,18 +33,24 @@ class Routes {
         ),
       ),
       GoRoute(
-        path: '/defined',
-        name: 'category',
-        pageBuilder: (context, state) => CustomTransitionPage(
-          child: DefinedCategoryPage(
-            tag: state.extra as String,
-          ),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(opacity: animation, child: child);
-          },
-          key: state.pageKey,
-        ),
-      ),
+          path: '/defined',
+          name: 'category',
+          pageBuilder: (context, state) {
+            final extra = state.extra as String;
+            GetIt.I<IAnimeTags>().addTag(
+              tag: extra,
+            );
+            return CustomTransitionPage(
+              child: DefinedCategoryPage(
+                tags: GetIt.I<IAnimeTags>().tags,
+              ),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                return FadeTransition(opacity: animation, child: child);
+              },
+              key: state.pageKey,
+            );
+          }),
     ],
   );
 }

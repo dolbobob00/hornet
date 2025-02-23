@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:restful_solid_bloc/src/presentation/cubit/anime_categories_info/cubit/anime_info_cubit.dart';
+import 'package:restful_solid_bloc/widgets/custom_drawer/category_tile.dart';
 import 'package:restful_solid_bloc/widgets/custom_drawer/drawer_header.dart';
 import 'package:restful_solid_bloc/widgets/custom_drawer/drawer_list_tile.dart';
 import 'package:restful_solid_bloc/widgets/custom_drawer/quotes_section.dart';
@@ -24,7 +26,8 @@ class DrawerContent extends StatelessWidget {
               children: [
                 Text(state.message),
                 ElevatedButton(
-                  onPressed: () => context.read<AnimeInfoCubit>().fetchCategories(),
+                  onPressed: () =>
+                      context.read<AnimeInfoCubit>().fetchCategories(),
                   child: const Text('Retry'),
                 ),
               ],
@@ -38,8 +41,19 @@ class DrawerContent extends StatelessWidget {
             children: [
               const CustomDrawerHeader(),
               const QuotesSection(),
+              DrawerListTile(
+                name: 'Home',
+                description: 'Go to Home Page',
+                onTap: () {
+                  context.goNamed(
+                    'home',
+                  );
+                },
+              ),
               ...state.animeCategories.entries.map(
-                (entry) => _buildCategoryTile(entry),
+                (entry) => CategoryTile(
+                  entry: entry,
+                ),
               ),
             ],
           );
@@ -48,31 +62,5 @@ class DrawerContent extends StatelessWidget {
         return const SizedBox();
       },
     );
-  }
-
-  Widget _buildCategoryTile(MapEntry<String, dynamic> entry) {
-    return ExpansionTile(
-      leading: const Icon(Icons.category),
-      title: Text(entry.key),
-      children: (entry.value as List).map<Widget>(
-        (item) => Container(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Colors.grey.shade300,
-              ),
-            ),
-          ),
-          child: DrawerListTile(
-            name: _capitalizeFirstLetter(item['name'].toString()),
-            description: item['description'],
-          ),
-        ),
-      ).toList(),
-    );
-  }
-
-  String _capitalizeFirstLetter(String text) {
-    return text[0].toUpperCase() + text.substring(1);
   }
 }
