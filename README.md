@@ -69,3 +69,27 @@ lib/
     ├── custom_appbar.dart
     └── custom_drawer/
 ```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### Third-Party Licenses
+
+This project uses the following APIs and services:
+- [waifu.im](https://waifu.im) - Image content API
+- [API Ninjas](https://api-ninjas.com) - Quotes API
+
+Dependencies are licensed under their respective licenses:
+- flutter_bloc: MIT License
+- get_it: MIT License
+- dio: MIT License
+- cached_network_image: MIT License
+- share_plus: BSD License
+- url_launcher: BSD License
+- path_provider: BSD License
+
+### Disclaimer
+
+This application contains NSFW content and is intended for mature audiences only.
+All images are provided by third-party APIs and we do not claim ownership of any content displayed in the application.

@@ -1,7 +1,8 @@
 name: restful_solid_bloc
-description: "A new Flutter project."
+description: "Hornet - An anime image gallery application with NSFW content."
 publish_to: 'none'
-version: 0.1.0
+version: 0.1.1
+license: MIT
 
 environment:
   sdk: ^3.6.1
