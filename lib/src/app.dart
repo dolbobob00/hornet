@@ -4,6 +4,7 @@ import 'package:restful_solid_bloc/src/presentation/cubit/anime_categories_info/
 import 'package:restful_solid_bloc/src/presentation/cubit/home_page_cubit/cubit/anime_pics_cubit.dart';
 import 'package:restful_solid_bloc/src/presentation/cubit/quotes_cubit/cubit/quotes_cubit.dart';
 import 'package:restful_solid_bloc/src/routes/routes.dart';
+import 'theme/app_theme.dart';
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
@@ -26,9 +27,8 @@ class MainApp extends StatelessWidget {
       child: MaterialApp.router(
         title: 'Hornet(Love Rem)',
         routerConfig: routes.routerConfig,
-        theme: ThemeData(
-          primarySwatch: Colors.indigo,
-        ),
+        theme: AppTheme.lightTheme,
+        debugShowCheckedModeBanner: false,
       ),
     );
   }
