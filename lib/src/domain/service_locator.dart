@@ -27,15 +27,23 @@ class GetItServiceLocator implements IServiceLocator {
     getIt.registerLazySingleton<IUrlService>(
       () => UrlServiceImpl(),
     );
-    getIt.registerLazySingleton<IAnimeRepository>(
-      () => DataAnimeRepository(
-        baseUrl: getIt<Constants>().animeFetchUrl,
-      ),
-    );
+
     getIt.registerLazySingleton<QuotesRepository>(
       () => QuotesRepositoryImpl(
         baseUrl: getIt<Constants>().quotesFetchUrl,
       ),
+    );
+    getIt.registerLazySingleton<IAnimeRepository>(
+      () => Rule34AnimeRepository(
+        baseUrl: getIt<Constants>().rule34Api,
+      ),
+      instanceName: 'rule34Repository',
+    );
+    getIt.registerLazySingleton<IAnimeRepository>(
+      () => DataAnimeRepository(
+        baseUrl: getIt<Constants>().animeFetchUrl,
+      ),
+      instanceName: 'waifuRepository',
     );
   }
 }

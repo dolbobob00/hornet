@@ -24,7 +24,7 @@ class _AmountTabBarState extends State<AmountTabBar> {
             ElevatedButton(
               onPressed: () {
                 widget.bloc.fetchMultiplePictures(
-                  isNsfw: true,
+                  isNsfw: GetIt.I<IAnimeTags>().showNSFW,
                   isGif: GetIt.I<IAnimeTags>().showGif,
                   amount: 5,
                   tags: widget.tags,
@@ -37,7 +37,7 @@ class _AmountTabBarState extends State<AmountTabBar> {
             ElevatedButton(
               onPressed: () {
                 widget.bloc.fetchMultiplePictures(
-                  isNsfw: true,
+                  isNsfw: GetIt.I<IAnimeTags>().showNSFW,
                   isGif: GetIt.I<IAnimeTags>().showGif,
                   amount: 10,
                   tags: widget.tags,
@@ -50,7 +50,7 @@ class _AmountTabBarState extends State<AmountTabBar> {
             ElevatedButton(
               onPressed: () {
                 widget.bloc.fetchMultiplePictures(
-                  isNsfw: true,
+                  isNsfw: GetIt.I<IAnimeTags>().showNSFW,
                   isGif: GetIt.I<IAnimeTags>().showGif,
                   amount: 15,
                   tags: widget.tags,

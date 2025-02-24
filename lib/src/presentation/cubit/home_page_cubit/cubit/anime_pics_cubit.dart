@@ -7,7 +7,63 @@ part 'anime_pics_state.dart';
 
 class AnimePicsCubit extends Cubit<AnimePicsState> {
   AnimePicsCubit() : super(AnimePicsInitial());
-  final IAnimeRepository repository = GetIt.I<IAnimeRepository>();
+  final IAnimeRepository repository = GetIt.I<IAnimeRepository>(
+    instanceName: 'waifuRepository',
+  );
+  final IAnimeRepository repositoryRule34 = GetIt.I<IAnimeRepository>(
+    instanceName: 'rule34Repository',
+  );
+
+  void fetchFromRule34({
+    required String tag,
+    bool isNsfw = true,
+    bool isGif = false,
+    int? amount,
+  }) async {
+    emit(
+      AnimePicsLoading(),
+    );
+
+    try {
+      final responce = await repositoryRule34.getAnimeMedia(
+        isNsfw: isNsfw,
+        isGif: isGif,
+        amount: amount,
+        tags: [
+          tag,
+        ],
+      );
+      final List<dynamic> images = responce.entries.first.value;
+      images.shuffle();
+      final List<String> pictureUrls = [];
+      final List<String> uploadedAt = [];
+      final List<String> source = [];
+      for (var element in images) {
+        final String? pictureUrl = element['file_url'];
+        final String? owner = element['owner'];
+        String? sourceAuthor = element['source'];
+        if (sourceAuthor?.isEmpty ?? false) {
+          sourceAuthor = 'Unknown source';
+        }
+        pictureUrls.add(pictureUrl ?? '');
+        uploadedAt.add(owner ?? 'Unknown');
+        source.add(sourceAuthor ?? 'Unknown');
+      }
+      emit(
+        AnimeMultiplePicturesState(
+          pictureUrls: pictureUrls,
+          uploadedAt: uploadedAt,
+          source: source,
+        ),
+      );
+    } catch (e) {
+      emit(
+        AnimePictureError(
+          message: 'Failed to fetch picture $e',
+        ),
+      );
+    }
+  }
 
   void clearState() {
     emit(
@@ -72,10 +128,10 @@ class AnimePicsCubit extends Cubit<AnimePicsState> {
         isNsfw: isNsfw,
         isGif: isGif,
         amount: 2,
-        tags: tag?.isNotEmpty == true ? tag : null, // Only pass tags if not empty
+        tags: tag?.isNotEmpty == true ? tag : null,
       );
-      
-      final responseInfo = response['images'] ?? []; // Use proper key from API
+
+      final responseInfo = response['images'] ?? [];
       if (responseInfo.isEmpty) {
         throw Exception('No images found');
       }

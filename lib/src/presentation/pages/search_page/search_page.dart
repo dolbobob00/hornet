@@ -1,43 +1,27 @@
+// SearchField
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
-import 'package:restful_solid_bloc/src/domain/anime_tags.dart';
 import 'package:restful_solid_bloc/src/presentation/cubit/home_page_cubit/cubit/anime_pics_cubit.dart';
-
+import 'package:restful_solid_bloc/widgets/custom_appbar.dart';
+import 'package:restful_solid_bloc/widgets/custom_drawer/my_custom_drawer.dart';
+import 'package:restful_solid_bloc/widgets/custom_loading_circle.dart';
 import 'package:restful_solid_bloc/widgets/image_card/image_card.dart';
-import 'package:restful_solid_bloc/widgets/amount_tab_bar_picker.dart';
+import 'package:restful_solid_bloc/widgets/nsfw_sfw_row_fab.dart';
 import 'package:restful_solid_bloc/widgets/search_field/search_field.dart';
 
-import '../../../../widgets/custom_appbar.dart';
-import '../../../../widgets/custom_drawer/my_custom_drawer.dart';
-import '../../../../widgets/custom_loading_circle.dart';
-import '../../../../widgets/nsfw_sfw_row_fab.dart';
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class SearchPage extends StatelessWidget {
+  const SearchPage({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<AnimePicsCubit>(context);
+    final bloc = BlocProvider.of<AnimePicsCubit>(context)..clearState();
     return Scaffold(
       floatingActionButton: NsfwSfwRowFab(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: CustomAppbar(
-        title: 'Home Page',
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              GetIt.I<IAnimeTags>().clearTags();
-            },
-            child: Text(
-              'remove tag\'s',
-            ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {},
-          ),
-        ],
+        title: 'Try to search for your waifu',
         titleStyle: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.bold,
@@ -46,7 +30,65 @@ class HomePage extends StatelessWidget {
       drawer: const MyCustomDrawer(),
       body: Column(
         children: [
-          AmountTabBar(bloc: bloc),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SearchField(),
+          ),
+          ExpansionTile(
+            title: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Rules of tag writing',
+                ),
+                Icon(
+                  Icons.info,
+                ),
+              ],
+            ),
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(),
+                  borderRadius: BorderRadius.circular(
+                    25,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: RichText(
+                    text: TextSpan(
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      children: [
+                        TextSpan(
+                          text: '- It\'s better to start with small letter\n',
+                        ),
+                        TextSpan(
+                          text: '- Use underscope "_" and not use space " "\n',
+                        ),
+                        TextSpan(
+                          text:
+                              '- Sometimes you must use name and surname of character\n',
+                        ),
+                        TextSpan(
+                          text:
+                              'Something like: "zoro_roronoa" or "dayneris_targaryen"\n',
+                        ),
+                        TextSpan(
+                          text:
+                              '- Sometimes you must specify name of which anime talking\n',
+                        ),
+                        TextSpan(
+                          text:
+                              'Something like: "rem_(re:zero)" and "ram_(re:zero)"\n',
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -86,9 +128,8 @@ class HomePage extends StatelessWidget {
                           height: MediaQuery.of(context).size.height * 0.6 +
                               MediaQuery.of(context).padding.bottom,
                           child: ListView.builder(
-                            //todo think about page view
-                            scrollDirection: Axis.vertical,
                             itemCount: state.pictureUrls.length,
+                            scrollDirection: Axis.vertical,
                             itemBuilder: (context, index) {
                               return ImageCard(
                                 imageUrl: state.pictureUrls[index],
@@ -140,18 +181,20 @@ class HomePage extends StatelessWidget {
                         size: 100.0,
                       );
                     }
-                    return Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius: BorderRadius.circular(
-                          25,
+                    return Center(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(),
+                          borderRadius: BorderRadius.circular(
+                            25,
+                          ),
                         ),
-                      ),
-                      child: Text(
-                        'Be carefull! This is a NSFW content!',
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.red,
+                        child: Text(
+                          'Be carefull! This is a NSFW content!',
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.red,
+                          ),
                         ),
                       ),
                     );

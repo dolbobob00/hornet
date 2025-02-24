@@ -86,9 +86,11 @@ class DefinedCategoryPage extends StatelessWidget {
                         ),
                         child: SizedBox(
                           width: double.infinity,
-                          height: MediaQuery.of(context).size.height * 0.6,
+                          height: MediaQuery.of(context).size.height * 0.6 +
+                              MediaQuery.of(context).padding.bottom,
                           child: ListView.builder(
                             itemCount: state.pictureUrls.length,
+                            scrollDirection: Axis.vertical,
                             itemBuilder: (context, index) {
                               return ImageCard(
                                 imageUrl: state.pictureUrls[index],
@@ -135,7 +137,6 @@ class DefinedCategoryPage extends StatelessWidget {
                           ),
                         ],
                       );
-                     
                     } else if (state is AnimePicsLoading) {
                       return const CustomLoadingCircle(
                         size: 100.0,

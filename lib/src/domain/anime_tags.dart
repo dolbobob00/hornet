@@ -1,9 +1,12 @@
 abstract class IAnimeTags {
   List<String> get tags;
   bool get showGif;
+  bool get showNSFW;
   set changeAllTagsTo(List<String> value);
 
   set changeShowGif(bool value);
+
+  set changeShowNSFW(bool value);
 
   void clearTags({List<String>? exceptTags}) {}
 
@@ -15,6 +18,7 @@ abstract class IAnimeTags {
 class AnimeTagsImpl implements IAnimeTags {
   List<String> _tags = [];
   bool _showGif = false;
+  bool _showNSFW = true;
 
   @override
   List<String> get tags => _tags;
@@ -22,6 +26,8 @@ class AnimeTagsImpl implements IAnimeTags {
   @override
   bool get showGif => _showGif;
 
+  @override
+  bool get showNSFW => _showNSFW;
   @override
   set changeAllTagsTo(List<String> value) => _tags = value;
 
@@ -49,5 +55,10 @@ class AnimeTagsImpl implements IAnimeTags {
   @override
   set changeShowGif(bool value) {
     _showGif = value;
+  }
+
+  @override
+  set changeShowNSFW(bool value) {
+    _showNSFW = value;
   }
 }

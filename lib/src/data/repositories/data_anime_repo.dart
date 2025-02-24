@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -17,22 +19,10 @@ class DataAnimeRepository implements IAnimeRepository {
   final String baseUrl;
 
   Map<String, dynamic> categoryInfo = {};
-
-  // Singleton implementation
-  static DataAnimeRepository? _instance;
-
   // Private constructor
   DataAnimeRepository({
     required this.baseUrl,
   });
-
-  // Instance getter
-  static DataAnimeRepository get instance {
-    if (_instance == null) {
-      throw StateError('Repository must be initialized with baseUrl first');
-    }
-    return _instance!;
-  }
 
   // Open-closed principle (O in SOLID) - extensible but closed for modification
   @override
@@ -88,5 +78,62 @@ class DataAnimeRepository implements IAnimeRepository {
     } catch (e) {
       throw Exception('Network error: $e');
     }
+  }
+}
+
+class Rule34AnimeRepository implements IAnimeRepository {
+  final String baseUrl;
+  Rule34AnimeRepository({required this.baseUrl});
+
+
+  Random random = Random();
+  @override
+  Future<Map<String, dynamic>> getAnimeMedia({
+    bool isNsfw = true,
+    bool isGif = false,
+    int? amount,
+    List<String>? tags,
+  }) async {
+    try {
+      String gif = isGif ? ' animated' : '';
+      String tagsString = tags?.join()??'rem_(re:zero) cute lesbian';
+      tagsString += gif;
+      tagsString.toLowerCase();
+      int randomPage;
+      if (tagsString.length > 25) {
+        randomPage = random.nextInt(2);
+      }else{
+         randomPage = random.nextInt(15);
+      }
+      final Map<String, dynamic> queryParams = {
+        'limit': amount?.toString() ?? '35',
+        's': 'post',
+        'q': 'index',
+        'json': 1,
+        'tags': tagsString,
+        'pid': randomPage.toString(),
+      };
+
+      final response = await GetIt.I<Dio>().get(
+        baseUrl,
+        queryParameters: queryParams,
+      );
+
+      if (response.statusCode == 200) {
+        return {'images': response.data};
+      } else {
+        throw Exception('Failed to load anime details: ${response.statusCode}');
+      }
+    } on DioException catch (e) {
+      throw Exception('API Error: ${e.response?.data ?? e.message}');
+    } catch (e) {
+      throw Exception('Network error: $e');
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> getCategoryAndInfo() {
+    // TODO: implement getCategoryAndInfo
+    throw UnimplementedError();
   }
 }

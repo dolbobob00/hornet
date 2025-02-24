@@ -7,14 +7,15 @@ import '../cached_image.dart';
 import 'download_button.dart';
 
 class ImageCard extends StatelessWidget {
-  const ImageCard(
-      {super.key,
-      this.source,
-      required this.imageUrl,
-      this.width,
-      this.height,
-      this.fit,
-      this.date});
+  const ImageCard({
+    super.key,
+    this.source,
+    required this.imageUrl,
+    this.width,
+    this.height,
+    this.fit,
+    this.date,
+  });
   final String imageUrl;
   final String? source;
   final String? date;
@@ -26,6 +27,7 @@ class ImageCard extends StatelessWidget {
     return Column(
       children: [
         CachedImage(
+          //! _nextFrame != null package:flutter/src/painting/image_stream.dart idk how to fix ths sht
           imageUrl: imageUrl,
           width: width ?? double.infinity,
           height: height ?? MediaQuery.of(context).size.height * 0.45,
