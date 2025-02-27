@@ -1,27 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-
 import '../src/domain/anime_tags.dart';
-import '../src/presentation/cubit/home_page_cubit/cubit/anime_pics_cubit.dart';
-
-class NsfwSfwRowFab extends StatelessWidget {
+class NsfwSfwRowFab extends StatefulWidget {
   const NsfwSfwRowFab({super.key});
 
   @override
+  State<NsfwSfwRowFab> createState() => _NsfwSfwRowFabState();
+}
+
+class _NsfwSfwRowFabState extends State<NsfwSfwRowFab> {
+  bool isNSFW = GetIt.I<IAnimeTags>().showNSFW;
+  @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<AnimePicsCubit>(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       spacing: 10,
       children: [
         FloatingActionButton(
+          backgroundColor: isNSFW ? Colors.green : Colors.red,
           onPressed: () {
-            bloc.fetchOnePicture(
-              isNsfw: true,
-              isGif: GetIt.I<IAnimeTags>().showGif,
-              tag: GetIt.I<IAnimeTags>().tags,
-            );
+            try {
+              GetIt.I<IAnimeTags>().changeShowNSFW = true;
+              setState(() {
+                isNSFW = true;
+              });
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    e.toString(),
+                  ),
+                ),
+              );
+            }
           },
           heroTag: 'btn3',
           child: Column(
@@ -41,12 +53,22 @@ class NsfwSfwRowFab extends StatelessWidget {
           ),
         ),
         FloatingActionButton(
+          backgroundColor: isNSFW ? Colors.red : Colors.green,
           onPressed: () {
-            bloc.fetchOnePicture(
-              isNsfw: false,
-              isGif: GetIt.I<IAnimeTags>().showGif,
-              tag: GetIt.I<IAnimeTags>().tags,
-            );
+            try {
+              setState(() {
+                isNSFW = false;
+              });
+              GetIt.I<IAnimeTags>().changeShowNSFW = false;
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    e.toString(),
+                  ),
+                ),
+              );
+            }
           },
           heroTag: 'btn4',
           child: Column(

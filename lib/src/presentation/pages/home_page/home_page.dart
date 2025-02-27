@@ -6,6 +6,7 @@ import 'package:restful_solid_bloc/src/presentation/cubit/home_page_cubit/cubit/
 
 import 'package:restful_solid_bloc/widgets/image_card/image_card.dart';
 import 'package:restful_solid_bloc/widgets/amount_tab_bar_picker.dart';
+import 'package:restful_solid_bloc/widgets/search_field/search_field.dart';
 
 import '../../../../widgets/custom_appbar.dart';
 import '../../../../widgets/custom_drawer/my_custom_drawer.dart';
@@ -82,8 +83,11 @@ class HomePage extends StatelessWidget {
                         ),
                         child: SizedBox(
                           width: double.infinity,
-                          height: MediaQuery.of(context).size.height * 0.6,
+                          height: MediaQuery.of(context).size.height * 0.6 +
+                              MediaQuery.of(context).padding.bottom,
                           child: ListView.builder(
+                            //todo think about page view
+                            scrollDirection: Axis.vertical,
                             itemCount: state.pictureUrls.length,
                             itemBuilder: (context, index) {
                               return ImageCard(

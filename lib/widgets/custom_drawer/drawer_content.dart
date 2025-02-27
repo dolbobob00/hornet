@@ -50,6 +50,15 @@ class DrawerContent extends StatelessWidget {
                   );
                 },
               ),
+              DrawerListTile(
+                name: 'Search',
+                description: 'Go to Search Page',
+                onTap: () {
+                  context.goNamed(
+                    'search',
+                  );
+                },
+              ),
               ...state.animeCategories.entries.map(
                 (entry) => CategoryTile(
                   entry: entry,

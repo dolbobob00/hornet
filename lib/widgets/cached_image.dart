@@ -20,8 +20,8 @@ class CachedImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: imageUrl,
-      width: width,
-      height: height,
+      width: width ?? MediaQuery.of(context).size.width * 0.85,
+      height: height ?? MediaQuery.of(context).size.height * 0.5,
       fit: fit ?? BoxFit.cover,
       placeholder: (context, url) => const Center(
         child: CustomLoadingCircle(),

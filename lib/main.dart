@@ -5,6 +5,7 @@ import 'src/app.dart';
 
 void main() async {
   GetItServiceLocator().getItSetup();
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     const MainApp(),
   );
