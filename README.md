@@ -2,6 +2,8 @@
 
 A Flutter application that demonstrates clean architecture, SOLID principles, and BLoC pattern while fetching and displaying anime images.
 
+![Screenshot_2025-02-27-19-49-22-946_com example restful_solid_bloc](https://github.com/user-attachments/assets/f1b2ebb3-ead4-47b3-895a-714c11a26ced) ![Screenshot_2025-02-27-19-50-32-504_com example restful_solid_bloc](https://github.com/user-attachments/assets/3623ebab-2a56-417e-82e6-debbab97b2f4) ![Screenshot_2025-02-27-19-51-26-700_com example restful_solid_bloc](https://github.com/user-attachments/assets/cd166336-4114-4711-a7e1-4e3c658d81ab) ![Screenshot_2025-02-27-19-49-26-377_com example restful_solid_bloc](https://github.com/user-attachments/assets/6b881986-80b5-4e5d-8bc8-f3f0a448d456)
+
 ## Features
 
 - Fetch and display anime images from [waifu.im](https://waifu.im) API
