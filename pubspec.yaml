@@ -11,6 +11,7 @@ dependencies:
   bloc: ^9.0.0
   bloc_concurrency: ^0.3.0
   cached_network_image: ^3.3.1
+  chewie: ^1.10.0
   dio: ^5.8.0+1
   flutter:
     sdk: flutter

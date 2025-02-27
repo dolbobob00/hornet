@@ -54,7 +54,7 @@ class DrawerContent extends StatelessWidget {
                 name: 'Search',
                 description: 'Go to Search Page',
                 onTap: () {
-                  context.pushNamed(
+                  context.goNamed(
                     'search',
                   );
                 },

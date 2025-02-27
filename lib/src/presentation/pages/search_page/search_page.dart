@@ -9,6 +9,8 @@ import 'package:restful_solid_bloc/widgets/image_card/image_card.dart';
 import 'package:restful_solid_bloc/widgets/nsfw_sfw_row_fab.dart';
 import 'package:restful_solid_bloc/widgets/search_field/search_field.dart';
 
+import '../../../../widgets/image_card/media_card.dart';
+
 class SearchPage extends StatelessWidget {
   const SearchPage({
     super.key,
@@ -18,8 +20,6 @@ class SearchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<AnimePicsCubit>(context)..clearState();
     return Scaffold(
-      floatingActionButton: NsfwSfwRowFab(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: CustomAppbar(
         title: 'Try to search for your waifu',
         titleStyle: const TextStyle(
@@ -118,6 +118,21 @@ class SearchPage extends StatelessWidget {
                           ),
                         );
                       } else if (state is AnimeMultiplePicturesState) {
+                        if (state.pictureUrls.isEmpty) {
+                          return Center(
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Try to fetch again please',
+                                ),
+                                Text(
+                                  'Sometimes there is problem with pagination of r34...',
+                                ),
+                                CustomLoadingCircle(),
+                              ],
+                            ),
+                          );
+                        }
                         return Container(
                           decoration: BoxDecoration(
                             border: Border.all(),

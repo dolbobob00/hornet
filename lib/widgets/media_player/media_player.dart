@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:chewie/chewie.dart';
+import 'package:restful_solid_bloc/widgets/custom_loading_circle.dart';
 import 'package:video_player/video_player.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class MediaPlayer extends StatefulWidget {
   final String url;
-  final BoxFit fit;
-  final double? width;
-  final double? height;
 
   const MediaPlayer({
     Key? key,
     required this.url,
-    this.fit = BoxFit.cover,
-    this.width,
-    this.height,
   }) : super(key: key);
 
   @override
@@ -21,77 +16,67 @@ class MediaPlayer extends StatefulWidget {
 }
 
 class _MediaPlayerState extends State<MediaPlayer> {
-  VideoPlayerController? _controller;
-  bool _isVideo = false;
+  late VideoPlayerController _videoPlayerController;
+  ChewieController? _chewieController;
+  bool _isInitialized = false;
 
   @override
   void initState() {
     super.initState();
-    _initializeMedia();
+    _initializePlayer();
   }
 
-  void _initializeMedia() {
-    _isVideo = widget.url.toLowerCase().endsWith('.webm') ||
-        widget.url.toLowerCase().endsWith('.mp4');
-
-    if (_isVideo) {
-      _controller = VideoPlayerController.networkUrl(Uri.parse(widget.url))
-        ..initialize().then((_) {
-          if (mounted) {
-            setState(() {});
-            _controller?.play();
-            _controller?.setLooping(true);
-          }
-        });
+  Future<void> _initializePlayer() async {
+    _videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(widget.url));
+    
+    try {
+      await _videoPlayerController.initialize();
+      _chewieController = ChewieController(
+        videoPlayerController: _videoPlayerController,
+        autoPlay: false,
+        looping: false,
+        allowFullScreen: true,
+        allowMuting: true,
+        showControls: true,
+        placeholder: Container(
+          color: Colors.black,
+          child: const Center(
+            child: CustomLoadingCircle(),
+          ),
+        ),
+        errorBuilder: (context, errorMessage) {
+          return Center(
+            child: Text(
+              errorMessage,
+              style: const TextStyle(color: Colors.white),
+            ),
+          );
+        },
+      );
+      setState(() {
+        _isInitialized = true;
+      });
+    } catch (e) {
+      debugPrint('Error initializing video player: $e');
     }
-  }
-
-  @override
-  void dispose() {
-    _controller?.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_isVideo) {
-      if (_controller?.value.isInitialized ?? false) {
-        return Stack(
-          alignment: Alignment.center,
-          children: [
-            SizedBox(
-              width: widget.width,
-              height: widget.height,
-              child: FittedBox(
-                fit: widget.fit,
-                child: SizedBox(
-                  width: _controller!.value.size.width,
-                  height: _controller!.value.size.height,
-                  child: VideoPlayer(_controller!),
-                ),
-              ),
-            ),
-            VideoProgressIndicator(
-              _controller!,
-              allowScrubbing: true,
-              padding: const EdgeInsets.all(8),
-            ),
-          ],
-        );
-      } else {
-        return const Center(child: CircularProgressIndicator());
-      }
-    } else {
-      return CachedNetworkImage(
-        imageUrl: widget.url,
-        fit: widget.fit,
-        width: widget.width,
-        height: widget.height,
-        placeholder: (context, url) => const Center(
-          child: CircularProgressIndicator(),
-        ),
-        errorWidget: (context, url, error) => const Icon(Icons.error),
-      );
-    }
+    return _isInitialized
+        ? AspectRatio(
+            aspectRatio: _videoPlayerController.value.aspectRatio,
+            child: Chewie(controller: _chewieController!),
+          )
+        : const Center(
+            child: CustomLoadingCircle(),
+          );
+  }
+
+  @override
+  void dispose() {
+    _videoPlayerController.dispose();
+    _chewieController?.dispose();
+    super.dispose();
   }
 }
