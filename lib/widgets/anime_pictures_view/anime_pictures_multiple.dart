@@ -71,19 +71,8 @@ class _AnimePicturesMultipleState extends State<AnimePicturesMultiple> {
   }
 
   void _preloadAdjacentImages(int currentIndex) {
-    // Предзагрузка предыдущих 1 изображений
-    for (int i = 1; i <= 1; i++) {
-      final prevIndex = currentIndex - i;
-      if (prevIndex >= 0) {
-        precacheImage(
-          NetworkImage(widget.pictureUrls[prevIndex]),
-          context,
-        );
-      }
-    }
-    
-    // Предзагрузка следующих 1 изображений
-    for (int i = 1; i <= 1; i++) {
+    // Предзагрузка следующих 2 изображений
+    for (int i = 1; i <= 2; i++) {
       final nextIndex = currentIndex + i;
       if (nextIndex < widget.pictureUrls.length) {
         precacheImage(
