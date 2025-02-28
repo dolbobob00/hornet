@@ -19,6 +19,7 @@ class AnimePicsCubit extends Cubit<AnimePicsState> {
     bool isNsfw = true,
     bool isGif = false,
     int? amount,
+    int? page,
   }) async {
     emit(
       AnimePicsLoading(),
@@ -29,6 +30,7 @@ class AnimePicsCubit extends Cubit<AnimePicsState> {
         isNsfw: isNsfw,
         isGif: isGif,
         amount: amount,
+        page: page,
         tags: [
           tag,
         ],

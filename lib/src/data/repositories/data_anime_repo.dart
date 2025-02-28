@@ -9,6 +9,7 @@ abstract class IAnimeRepository {
   Future<Map<String, dynamic>> getAnimeMedia({
     bool isNsfw = true,
     bool isGif = false,
+    int? page,
     int? amount,
     List<String>? tags,
   });
@@ -29,6 +30,7 @@ class DataAnimeRepository implements IAnimeRepository {
   Future<Map<String, dynamic>> getAnimeMedia({
     bool isNsfw = true,
     bool isGif = false,
+    int? page,
     int? amount,
     List<String>? tags,
   }) async {
@@ -85,7 +87,6 @@ class Rule34AnimeRepository implements IAnimeRepository {
   final String baseUrl;
   Rule34AnimeRepository({required this.baseUrl});
 
-
   Random random = Random();
   @override
   Future<Map<String, dynamic>> getAnimeMedia({
@@ -93,17 +94,25 @@ class Rule34AnimeRepository implements IAnimeRepository {
     bool isGif = false,
     int? amount,
     List<String>? tags,
+    int? page,
   }) async {
     try {
       String gif = isGif ? ' animated' : '';
-      String tagsString = tags?.join()??'rem_(re:zero) cute lesbian';
+      String tagsString = tags?.join() ?? 'rem_(re:zero) animated';
       tagsString += gif;
       tagsString.toLowerCase();
       int randomPage;
-      if (tagsString.length > 25) {
-        randomPage = random.nextInt(2);
-      }else{
-         randomPage = random.nextInt(15);
+      if (page == -1 || page == null) {
+        if (tagsString.length > 16) {
+          randomPage = random.nextInt(5);
+        } else {
+          randomPage = random.nextInt(15);
+        }
+        if (tags!.contains('animated') || tags.contains('gif')) {
+          randomPage = random.nextInt(5);
+        }
+      } else{
+        randomPage = page;
       }
       final Map<String, dynamic> queryParams = {
         'limit': amount?.toString() ?? '35',

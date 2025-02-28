@@ -2,15 +2,20 @@ abstract class IAnimeTags {
   List<String> get tags;
   bool get showGif;
   bool get showNSFW;
+  int get pageValue;
   set changeAllTagsTo(List<String> value);
 
   set changeShowGif(bool value);
 
   set changeShowNSFW(bool value);
 
+  void changeAmountOfPages({required int whatIncOrDec});
+
   void clearTags({List<String>? exceptTags}) {}
 
   void addTag({required String tag}) {}
+
+  void clearAmountOfPages();
 
   void deleteTag({required String tag}) {}
 }
@@ -19,6 +24,7 @@ class AnimeTagsImpl implements IAnimeTags {
   List<String> _tags = [];
   bool _showGif = false;
   bool _showNSFW = true;
+  int _page = 1;
 
   @override
   List<String> get tags => _tags;
@@ -60,5 +66,22 @@ class AnimeTagsImpl implements IAnimeTags {
   @override
   set changeShowNSFW(bool value) {
     _showNSFW = value;
+  }
+
+  @override
+  int get pageValue => _page;
+
+  @override
+  void clearAmountOfPages(){
+    _page = 0;
+  }
+
+  @override
+  void changeAmountOfPages({required int whatIncOrDec}) {
+    if (_page < -1) {
+      _page = -1;
+      return;
+    }
+    _page += whatIncOrDec;
   }
 }

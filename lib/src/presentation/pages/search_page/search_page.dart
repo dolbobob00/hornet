@@ -6,10 +6,8 @@ import 'package:restful_solid_bloc/widgets/custom_appbar.dart';
 import 'package:restful_solid_bloc/widgets/custom_drawer/my_custom_drawer.dart';
 import 'package:restful_solid_bloc/widgets/custom_loading_circle.dart';
 import 'package:restful_solid_bloc/widgets/image_card/image_card.dart';
-import 'package:restful_solid_bloc/widgets/nsfw_sfw_row_fab.dart';
+import 'package:restful_solid_bloc/widgets/page_counter.dart';
 import 'package:restful_solid_bloc/widgets/search_field/search_field.dart';
-
-import '../../../../widgets/image_card/media_card.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({
@@ -25,6 +23,34 @@ class SearchPage extends StatelessWidget {
         titleStyle: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.bold,
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
+                  border: Border.all(),
+                  borderRadius: BorderRadius.circular(
+                    16,
+                  ),
+                ),
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    PageCounterRow(),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+        child: Icon(
+          Icons.pages,
         ),
       ),
       drawer: const MyCustomDrawer(),
@@ -61,6 +87,9 @@ class SearchPage extends StatelessWidget {
                       text: TextSpan(
                         style: Theme.of(context).textTheme.bodyMedium,
                         children: [
+                          TextSpan(
+                            text: '- Dont forget to check page, on button in right corner\n',
+                          ),
                           TextSpan(
                             text: '- It\'s better to start with small letter\n',
                           ),
