@@ -5,6 +5,7 @@ import 'package:restful_solid_bloc/widgets/image_card/share_button.dart';
 import '../cached_image.dart';
 import 'download_button.dart';
 import '../media_player/media_player.dart';
+import '../fullscreen_image/fullscreen_image_view.dart';
 
 class ImageCard extends StatelessWidget {
   const ImageCard({
@@ -25,18 +26,32 @@ class ImageCard extends StatelessWidget {
 
   bool get _isVideo => imageUrl.endsWith('.mp4') || imageUrl.endsWith('.webm');
 
+  void _handleImageTap(BuildContext context) {
+    if (!_isVideo) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => FullScreenImageView(imageUrl: imageUrl),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _isVideo
-            ? MediaPlayer(url: imageUrl)
-            : CachedImage(
-                imageUrl: imageUrl,
-                width: width ?? double.infinity,
-                height: height ?? MediaQuery.of(context).size.height * 0.45,
-                fit: fit ?? BoxFit.contain,
-              ),
+        GestureDetector(
+          onTap: () => _handleImageTap(context),
+          child: _isVideo
+              ? MediaPlayer(url: imageUrl)
+              : CachedImage(
+                  imageUrl: imageUrl,
+                  width: width ?? double.infinity,
+                  height: height ?? MediaQuery.of(context).size.height * 0.45,
+                  fit: fit ?? BoxFit.contain,
+                ),
+        ),
         Text(
           date ?? '',
         ),
