@@ -7,9 +7,9 @@ class MediaPlayer extends StatefulWidget {
   final String url;
 
   const MediaPlayer({
-    Key? key,
+    super.key,
     required this.url,
-  }) : super(key: key);
+  });
 
   @override
   State<MediaPlayer> createState() => _MediaPlayerState();

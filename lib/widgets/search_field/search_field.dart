@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -31,6 +29,7 @@ class _SearchFieldState extends State<SearchField> {
             onSubmitted: (value) {
               bloc.fetchFromRule34(
                 tag: value,
+                page: GetIt.I<IAnimeTags>().pageValue,
               );
             },
             decoration: InputDecoration(

@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:restful_solid_bloc/src/presentation/cubit/anime_categories_info/cubit/anime_info_cubit.dart';
-import 'package:restful_solid_bloc/src/presentation/cubit/quotes_cubit/cubit/quotes_cubit.dart';
-import 'package:restful_solid_bloc/widgets/custom_loading_circle.dart';
+import 'splash_screen_imports.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -41,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen>
     );
     context.read<AnimeInfoCubit>().fetchCategories();
     context.read<QuotesCubit>().fetchQuote();
-    
+
     _controller.forward();
   }
 
@@ -98,6 +93,7 @@ class _SplashScreenState extends State<SplashScreen>
               child: Container(),
             ),
             SizedBox(height: size.height * 0.03), // 3% от высоты экрана
+
             FadeTransition(
               opacity: _fadeAnimation,
               child: CustomLoadingCircle(
