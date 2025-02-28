@@ -1,3 +1,5 @@
+import 'package:restful_solid_bloc/widgets/my_custom_card.dart';
+
 import 'home_page_imports.dart';
 
 class HomePage extends StatelessWidget {
@@ -31,47 +33,65 @@ class HomePage extends StatelessWidget {
         ),
       ),
       drawer: const MyCustomDrawer(),
-      body: Column(
+      body: Stack(
         children: [
-          AmountTabBar(bloc: bloc),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'Welcome to the Horny Anime App!',
-                  style: TextStyle(fontSize: 24),
+          Image.asset(
+            'assets/images/background/bg2.jpg',
+            fit: BoxFit.cover,
+            height: MediaQuery.of(context).size.height,
+          ),
+          Column(
+            children: [
+              AmountTabBar(bloc: bloc),
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    MyCustomCard(
+                      child: Text(
+                        'Welcome to the Horny Anime App!',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall!
+                            .copyWith(
+                              color:
+                                  Theme.of(context).colorScheme.inversePrimary,
+                              fontSize: 20,
+                            ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    BlocBuilder<AnimePicsCubit, AnimePicsState>(
+                      bloc: bloc,
+                      builder: (context, state) {
+                        if (state is AnimePictureState) {
+                          return AnimePictureSingle(
+                            pictureUrl: state.pictureUrl,
+                            uploadedAt: state.uploadedAt,
+                            source: state.source,
+                          );
+                        } else if (state is AnimeMultiplePicturesState) {
+                          return AnimePicturesMultiple(
+                            pictureUrls: state.pictureUrls,
+                            uploadedAt: state.uploadedAt,
+                            source: state.source,
+                          );
+                        } else if (state is AnimePictureError) {
+                          return ErrorHandlerAnimePictures(
+                            message: state.message,
+                          );
+                        } else if (state is AnimePicsLoading) {
+                          return const CustomLoadingCircle(
+                            size: 100.0,
+                          );
+                        }
+                        return ReminderAboutNsfw();
+                      },
+                    )
+                  ],
                 ),
-                SizedBox(height: 20),
-                BlocBuilder<AnimePicsCubit, AnimePicsState>(
-                  bloc: bloc,
-                  builder: (context, state) {
-                    if (state is AnimePictureState) {
-                      return AnimePictureSingle(
-                        pictureUrl: state.pictureUrl,
-                        uploadedAt: state.uploadedAt,
-                        source: state.source,
-                      );
-                    } else if (state is AnimeMultiplePicturesState) {
-                      return AnimePicturesMultiple(
-                        pictureUrls: state.pictureUrls,
-                        uploadedAt: state.uploadedAt,
-                        source: state.source,
-                      );
-                    } else if (state is AnimePictureError) {
-                      return ErrorHandlerAnimePictures(
-                        message: state.message,
-                      );
-                    } else if (state is AnimePicsLoading) {
-                      return const CustomLoadingCircle(
-                        size: 100.0,
-                      );
-                    }
-                    return ReminderAboutNsfw();
-                  },
-                )
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),

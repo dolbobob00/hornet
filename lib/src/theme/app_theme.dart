@@ -16,6 +16,7 @@ class AppTheme {
         error: AppColors.error,
         onError: Colors.white,
         surface: AppColors.surface,
+        inversePrimary: Colors.white,
         onSurface: AppColors.primaryText,
       ),
 
