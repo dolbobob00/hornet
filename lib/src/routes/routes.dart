@@ -17,7 +17,18 @@ class Routes {
         pageBuilder: (context, state) => CustomTransitionPage(
           child: SplashScreen(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(opacity: animation, child: child);
+            // Fade and scale transition for splash screen
+            return ScaleTransition(
+              scale: animation.drive(
+                Tween(begin: 0.0, end: 1.0).chain(
+                  CurveTween(curve: Curves.easeInOut),
+                ),
+              ),
+              child: FadeTransition(
+                opacity: animation,
+                child: child,
+              ),
+            );
           },
           key: state.pageKey,
         ),
@@ -28,7 +39,16 @@ class Routes {
         pageBuilder: (context, state) => CustomTransitionPage(
           child: HomePage(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(opacity: animation, child: child);
+            // Slide transition from right for home page
+            return SlideTransition(
+              position: animation.drive(
+                Tween(
+                  begin: const Offset(1.0, 0.0),
+                  end: Offset.zero,
+                ).chain(CurveTween(curve: Curves.easeInOut)),
+              ),
+              child: child,
+            );
           },
           key: state.pageKey,
         ),
@@ -39,7 +59,16 @@ class Routes {
         pageBuilder: (context, state) => CustomTransitionPage(
           child: SearchPage(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(opacity: animation, child: child);
+            // Fade and scale transition for search page
+            return FadeTransition(
+              opacity: animation.drive(
+                CurveTween(curve: Curves.easeInOut),
+              ),
+              child: ScaleTransition(
+                scale: animation,
+                child: child,
+              ),
+            );
           },
           key: state.pageKey,
         ),
@@ -58,7 +87,25 @@ class Routes {
               ),
               transitionsBuilder:
                   (context, animation, secondaryAnimation, child) {
-                return FadeTransition(opacity: animation, child: child);
+                // Size and fade transition for category page
+                return SizeTransition(
+                  sizeFactor: animation,
+                  axisAlignment: 0.0,
+                  child: FadeTransition(
+                    opacity: animation.drive(
+                      CurveTween(curve: Curves.easeInOut),
+                    ),
+                    child: SlideTransition(
+                      position: animation.drive(
+                        Tween(
+                          begin: const Offset(0.0, 1.0),
+                          end: Offset.zero,
+                        ).chain(CurveTween(curve: Curves.easeInOut)),
+                      ),
+                      child: child,
+                    ),
+                  ),
+                );
               },
               key: state.pageKey,
             );
