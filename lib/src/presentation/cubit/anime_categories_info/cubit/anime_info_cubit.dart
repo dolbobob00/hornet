@@ -8,8 +8,7 @@ part 'anime_info_state.dart';
 
 class AnimeInfoCubit extends Cubit<AnimeInfoState> {
   AnimeInfoCubit() : super(AnimeInfoInitial());
-  final IAnimeRepository repository =
-      GetIt.I<IAnimeRepository>(instanceName: 'waifuRepository');
+  final ICategoryRepository repository = GetIt.I<ICategoryRepository>();
   void fetchCategories() async {
     emit(
       AnimeInfoLoading(),

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:restful_solid_bloc/src/data/constants.dart';
+import 'package:restful_solid_bloc/src/domain/network_client.dart';
 
 // Abstract class defining the contract (Interface Segregation Principle)
 abstract class QuotesRepository {
@@ -20,8 +21,8 @@ class QuotesRepositoryImpl implements QuotesRepository {
   @override
   Future<List<dynamic>> getRandomQuote() async {
     try {
-      final response = await GetIt.I<Dio>().get(
-        baseUrl,
+      final response = await GetIt.I<INetworkClient>().get(
+        path: baseUrl,
         options: Options(
           headers: {
             'X-Api-Key': GetIt.instance<Constants>().quotesAPI,
