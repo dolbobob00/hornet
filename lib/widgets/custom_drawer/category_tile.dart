@@ -1,6 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
+import 'package:go_router/go_router.dart';
+import 'package:restful_solid_bloc/src/presentation/cubit/animations_cubit/cubit/animations_cubit.dart';
+import 'package:restful_solid_bloc/src/presentation/pages/search_page/search_page_imports.dart';
+
+import '../animations/animated_icon.dart';
 import 'drawer_list_tile.dart';
 
 class CategoryTile extends StatelessWidget {
@@ -8,9 +11,18 @@ class CategoryTile extends StatelessWidget {
   final MapEntry<String, dynamic> entry;
   @override
   Widget build(BuildContext context) {
+    final bloc = BlocProvider.of<AnimationsCubit>(context);
     return ExpansionTile(
-      leading: const Icon(Icons.category),
-      title: Text(entry.key),
+      onExpansionChanged: (value) {
+        bloc.mustProvideAnimation(
+          value: value,
+        );
+      },
+      leading: CustomAnimatedIcon(
+        animIcon: AnimatedIcons.list_view,
+        size: 24,
+      ),
+      title: Text(_capitalizeFirstLetter(entry.key)),
       children: (entry.value as List)
           .map<Widget>(
             (item) => Container(
