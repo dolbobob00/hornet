@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restful_solid_bloc/src/presentation/cubit/animations_cubit/cubit/animations_cubit.dart';
+import 'package:restful_solid_bloc/src/constants/ui_constants.dart';
 
 class CustomAnimatedIcon extends StatefulWidget {
   const CustomAnimatedIcon({
@@ -27,8 +28,8 @@ class _CustomAnimatedIconState extends State<CustomAnimatedIcon>
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: Duration(
-        milliseconds: 300,
+      duration: const Duration(
+        milliseconds: UIConstants.animationDurationMedium,
       ),
     );
   }

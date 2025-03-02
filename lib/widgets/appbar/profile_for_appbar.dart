@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import '../../src/theme/app_colors.dart';
+import '../../src/constants/ui_constants.dart';
 
 class AvatarProfile extends StatelessWidget {
   const AvatarProfile({super.key});
@@ -10,21 +10,21 @@ class AvatarProfile extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          width: 50,
-          height: 50,
+          width: UIConstants.avatarSize,
+          height: UIConstants.avatarSize,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withAlpha(25),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
+                color: Colors.black.withAlpha(UIConstants.alphaHigh),
+                blurRadius: UIConstants.shadowBlurRadius,
+                offset: const Offset(0, UIConstants.shadowOffsetY),
               ),
             ],
             gradient: AppColors.secondaryGradient,
             border: Border.all(
               color: Colors.white,
-              width: 2,
+              width: UIConstants.borderWidthLarge,
             ),
           ),
         ),
@@ -32,8 +32,8 @@ class AvatarProfile extends StatelessWidget {
           right: 0,
           top: 0,
           child: Container(
-            width: 16,
-            height: 16,
+            width: UIConstants.notificationBadgeSize,
+            height: UIConstants.notificationBadgeSize,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               boxShadow: [
@@ -46,7 +46,7 @@ class AvatarProfile extends StatelessWidget {
               gradient: AppColors.secondaryGradient,
               border: Border.all(
                 color: Colors.white,
-                width: 1.5,
+                width: UIConstants.borderWidthMedium,
               ),
             ),
             child: Center(

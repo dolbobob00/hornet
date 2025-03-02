@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../src/theme/app_colors.dart';
-import '../search_field/search_field.dart';
+import '../../src/constants/ui_constants.dart';
 
 class MyCustomAppbar extends StatelessWidget {
   const MyCustomAppbar({super.key, this.title, this.actions, this.leading});
@@ -15,15 +15,15 @@ class MyCustomAppbar extends StatelessWidget {
       snap: true,
       backgroundColor: AppColors.transparent,
       centerTitle: false,
-      leadingWidth: 100,
+      leadingWidth: UIConstants.avatarSize * 2,
       leading: Container(),
-      toolbarHeight: MediaQuery.of(context).size.height * 0.1,
+      toolbarHeight: MediaQuery.of(context).size.height * UIConstants.appBarHeightMultiplier,
       flexibleSpace: FlexibleSpaceBar(
         expandedTitleScale: 1.0,
         centerTitle: true,
         title: SafeArea(
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 32.0),
+            padding: const EdgeInsets.symmetric(horizontal: UIConstants.paddingLarge),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,

@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:restful_solid_bloc/src/domain/network_client.dart';
+import 'package:restful_solid_bloc/src/presentation/pages/home_page/home_page_imports.dart';
 
 // Base repository interface
 abstract class IAnimeRepository {
@@ -28,6 +29,19 @@ class CategoryRepository implements ICategoryRepository {
   });
   Map<String, dynamic> categoryInfo = {};
 
+  List<String> categoriesList = [];
+
+  void _makeCategoriesAsList(dynamic responce) {
+    final categoriesMap =
+        (responce['versatile'] as List) + (responce['nsfw'] as List);
+    for (var element in categoriesMap) {
+      categoriesList.add(
+        element['name'].toString(),
+      );
+    }
+    GetIt.I<IAnimeTags>().allAvailableTags = categoriesList;
+  }
+
   @override
   Future<Map<String, dynamic>> getCategoryAndInfo() async {
     if (categoryInfo.isNotEmpty) {
@@ -45,6 +59,7 @@ class CategoryRepository implements ICategoryRepository {
 
   Map<String, dynamic> handleResponse(Response response) {
     if (response.statusCode == 200) {
+      _makeCategoriesAsList(response.data);
       return response.data;
     }
     throw Exception('Failed to load anime details: ${response.statusCode}');

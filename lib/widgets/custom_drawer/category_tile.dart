@@ -1,4 +1,3 @@
-
 import 'package:go_router/go_router.dart';
 import 'package:restful_solid_bloc/src/presentation/cubit/animations_cubit/cubit/animations_cubit.dart';
 import 'package:restful_solid_bloc/src/presentation/pages/search_page/search_page_imports.dart';
@@ -37,12 +36,11 @@ class CategoryTile extends StatelessWidget {
                 name: _capitalizeFirstLetter(item['name'].toString()),
                 description: item['description'],
                 onTap: () {
-                  context.goNamed(
-                    'category',
-                    extra: _capitalizeFirstLetter(
+                  context.goNamed('category', extra: {
+                    'tag': _capitalizeFirstLetter(
                       item['name'].toString(),
                     ),
-                  );
+                  });
                 },
               ),
             ),

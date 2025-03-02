@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:restful_solid_bloc/src/presentation/pages/splash_screen/splash_screen_imports.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:restful_solid_bloc/src/theme/app_colors.dart';
 
-class TopCategoriesTile extends StatelessWidget {
-  const TopCategoriesTile({super.key, required this.url, this.text});
+class AllCategoriesCircleTile extends StatelessWidget {
+  const AllCategoriesCircleTile({super.key, required this.url, this.text});
   final String? text;
   final String url;
   String _capitalizeFirstLetter(String text) {
@@ -15,11 +16,14 @@ class TopCategoriesTile extends StatelessWidget {
     return InkWell(
       onTap: () {
         if (text != null) {
-          context.pushNamed(
+          context.pushReplacementNamed(
             'category',
-            extra: _capitalizeFirstLetter(
-              text!,
-            ),
+            extra: {
+              'tag': _capitalizeFirstLetter(
+                text!,
+              ),
+              'isCheckLast': false,
+            },
           );
         }
       },

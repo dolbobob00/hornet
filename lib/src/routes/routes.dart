@@ -56,12 +56,31 @@ class Routes {
         ),
       ),
       GoRoute(
+        path: '/random',
+        name: 'random',
+        pageBuilder: (context, state) => CustomTransitionPage(
+          child: RandomAnimePage(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            // Slide transition from right for home page
+            return SlideTransition(
+              position: animation.drive(
+                Tween(
+                  begin: const Offset(1.0, 0.0),
+                  end: Offset.zero,
+                ).chain(CurveTween(curve: Curves.easeInOut)),
+              ),
+              child: child,
+            );
+          },
+          key: state.pageKey,
+        ),
+      ),
+      GoRoute(
         path: '/search',
         name: 'search',
         pageBuilder: (context, state) => CustomTransitionPage(
           child: SearchPage(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            // Fade and scale transition for search page
             return FadeTransition(
               opacity: animation.drive(
                 CurveTween(curve: Curves.easeInOut),
@@ -79,10 +98,22 @@ class Routes {
         path: '/defined',
         name: 'category',
         pageBuilder: (context, state) {
-          final extra = state.extra as String;
-          GetIt.I<IAnimeTags>().addTag(
-            tag: extra,
-          );
+          final extra = state.extra as Map<String, dynamic>;
+          if ((extra['isCheckLast'] ?? false) == true) {
+            GetIt.I<IAnimeTags>().clearTags();
+            GetIt.I<IAnimeTags>().changeAllTagsTo =
+                (extra['tag'] as String).split(
+              ' ',
+            );
+          } else {
+            GetIt.I<IAnimeTags>().addTag(
+              tag: extra['tag']?.toString() ?? '',
+            );
+          }
+          GetIt.I<IAnimeTags>().setLastTag = {
+            'tag': GetIt.I<IAnimeTags>().tags.join(' '),
+            'route': 'category',
+          };
           return CustomTransitionPage(
             child: DefinedCategoryPage(
               tags: GetIt.I<IAnimeTags>().tags,

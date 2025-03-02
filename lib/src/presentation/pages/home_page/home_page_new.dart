@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:restful_solid_bloc/src/presentation/cubit/animations_cubit/cubit/animations_cubit.dart';
 import 'package:restful_solid_bloc/src/presentation/pages/home_page/home_page_imports.dart';
 import 'package:restful_solid_bloc/src/presentation/pages/search_page/search_page_imports.dart';
@@ -13,7 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restful_solid_bloc/widgets/custom_icon.dart';
 import 'package:restful_solid_bloc/widgets/listview/listview_for_app.dart';
 import 'package:restful_solid_bloc/widgets/search_field/search_on_app.dart';
-import 'package:restful_solid_bloc/widgets/top_categories/top_categories.dart';
+import 'package:restful_solid_bloc/widgets/top_categories/all_categories_circle_builder.dart';
 
 class HomePageNew extends StatelessWidget {
   const HomePageNew({super.key});
@@ -21,7 +22,7 @@ class HomePageNew extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-
+    final lastChecked = GetIt.I<IAnimeTags>().getLastCheckedTag;
     return Scaffold(
       backgroundColor: AppColors.background,
       drawer: MyCustomDrawer(),
@@ -158,16 +159,15 @@ class HomePageNew extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            TopCategories(),
+                            AllCategoriesCircleBuilder(),
                             Text(
                               'Let\'s all love Rem and Lein...',
                               style: Theme.of(context)
                                   .textTheme
                                   .displayMedium!
                                   .copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.primary
-                                  ),
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.primary),
                               overflow: TextOverflow.ellipsis,
                             )
                           ],
@@ -211,7 +211,23 @@ class HomePageNew extends StatelessWidget {
                                     .copyWith(color: AppColors.background),
                               ),
                             ),
-                            ContinueAt(),
+                            InkWell(
+                              borderRadius: BorderRadius.circular(32),
+                              onTap: () {
+                                GetIt.I<IAnimeTags>().clearTags;
+                                context.pushNamed(
+                                  lastChecked['route'],
+                                  extra: {
+                                    'tag': lastChecked['tag'],
+                                    'isCheckLast': true,
+                                  },
+                                );
+                              },
+                              child: ContinueAt(
+                                name: lastChecked['tag'],
+                                url: lastChecked['preview_url'],
+                              ),
+                            ),
                           ],
                         ),
                       ),

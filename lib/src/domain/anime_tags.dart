@@ -3,11 +3,18 @@ abstract class IAnimeTags {
   bool get showGif;
   bool get showNSFW;
   int get pageValue;
+
+  set allAvailableTags(List<String> allTags);
+  List<String> get getAllAvailableTags;
   set changeAllTagsTo(List<String> value);
 
   set changeShowGif(bool value);
 
   set changeShowNSFW(bool value);
+
+  set setLastTag(Map<String, dynamic> lastCheckedTag);
+
+  Map<String, dynamic> get getLastCheckedTag;
 
   void changeAmountOfPages({required int whatIncOrDec});
 
@@ -25,6 +32,19 @@ class AnimeTagsImpl implements IAnimeTags {
   bool _showGif = false;
   bool _showNSFW = true;
   int _page = 1;
+  List<String> allTags = [];
+  Map<String, dynamic> savedLastTagChecked = {
+    'route': 'search',
+    'tag': null,
+    'preview_url':
+        'https://steamuserimages-a.akamaihd.net/ugc/187291001665850410/70264D31640E4F5D80F2B27B4AFBE076AE0F9AE2/?imw=512&amp;imh=287&amp;ima=fit&amp;impolicy=Letterbox&amp;imcolor=%23000000&amp;letterbox=true'
+  };
+  @override
+  set setLastTag(Map<String, dynamic> lastCheckedTag) =>
+      savedLastTagChecked = lastCheckedTag;
+
+  @override
+  Map<String, dynamic> get getLastCheckedTag => savedLastTagChecked;
 
   @override
   List<String> get tags => _tags;
@@ -50,6 +70,7 @@ class AnimeTagsImpl implements IAnimeTags {
 
   @override
   void addTag({required String tag}) {
+    if (_tags.contains(tag)) return;
     _tags.add(tag);
   }
 
@@ -72,7 +93,7 @@ class AnimeTagsImpl implements IAnimeTags {
   int get pageValue => _page;
 
   @override
-  void clearAmountOfPages(){
+  void clearAmountOfPages() {
     _page = 0;
   }
 
@@ -84,4 +105,12 @@ class AnimeTagsImpl implements IAnimeTags {
     }
     _page += whatIncOrDec;
   }
+
+  @override
+  set allAvailableTags(List<String> allTags) {
+    this.allTags = allTags;
+  }
+
+  @override
+  List<String> get getAllAvailableTags => allTags;
 }

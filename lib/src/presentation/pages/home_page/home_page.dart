@@ -2,8 +2,8 @@ import 'package:restful_solid_bloc/widgets/my_custom_card.dart';
 
 import 'home_page_imports.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class RandomAnimePage extends StatelessWidget {
+  const RandomAnimePage({super.key});
 
   @override
   Widget build(BuildContext context) {

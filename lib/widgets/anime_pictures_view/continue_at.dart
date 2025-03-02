@@ -27,10 +27,8 @@ class ContinueAt extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: CircleAvatar(
                   radius: 25,
-                  foregroundImage: NetworkImage(
-                    url ??
-                        'https://i.pinimg.com/originals/5e/1b/80/5e1b8054879243108737cdf7b1985922.jpg',
-                  ),
+                  foregroundImage: NetworkImage(url ??
+                      'https://steamuserimages-a.akamaihd.net/ugc/187291001665850410/70264D31640E4F5D80F2B27B4AFBE076AE0F9AE2/?imw=512&amp;imh=287&amp;ima=fit&amp;impolicy=Letterbox&amp;imcolor=%23000000&amp;letterbox=true'),
                 ),
               ),
               Text(
