@@ -60,7 +60,7 @@ class HomePage extends StatelessWidget {
                             ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                 const   SizedBox(height: 20),
                     BlocBuilder<AnimePicsCubit, AnimePicsState>(
                       bloc: bloc,
                       builder: (context, state) {
@@ -71,6 +71,21 @@ class HomePage extends StatelessWidget {
                             source: state.source,
                           );
                         } else if (state is AnimeMultiplePicturesState) {
+                          if (state.pictureUrls.isEmpty) {
+                            return const Center(
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'Try to fetch again please',
+                                  ),
+                                  Text(
+                                    'Maybe problems somehow.',
+                                  ),
+                                  CustomLoadingCircle(),
+                                ],
+                              ),
+                            );
+                          }
                           return AnimePicturesMultiple(
                             pictureUrls: state.pictureUrls,
                             uploadedAt: state.uploadedAt,
@@ -85,7 +100,7 @@ class HomePage extends StatelessWidget {
                             size: 100.0,
                           );
                         }
-                        return ReminderAboutNsfw();
+                        return const ReminderAboutNsfw();
                       },
                     )
                   ],

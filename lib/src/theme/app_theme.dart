@@ -50,10 +50,8 @@ class AppTheme {
         displayMedium: AppTextStyles.h2,
         displaySmall: AppTextStyles.h3,
         headlineMedium: AppTextStyles.h4,
-        headlineSmall: AppTextStyles.h5,
-        titleLarge: AppTextStyles.h6,
-        bodyLarge: AppTextStyles.body1,
-        bodyMedium: AppTextStyles.body2,
+        bodyLarge: AppTextStyles.h5,
+        bodyMedium: AppTextStyles.h6,
       ),
 
       // Input Decoration Theme

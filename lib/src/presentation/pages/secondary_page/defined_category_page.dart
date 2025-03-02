@@ -44,7 +44,7 @@ class DefinedCategoryPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'Welcome to the Horny Anime App!',
+                  tags.join(),
                   style: TextStyle(fontSize: 24),
                 ),
                 SizedBox(height: 20),
@@ -57,6 +57,21 @@ class DefinedCategoryPage extends StatelessWidget {
                           uploadedAt: state.uploadedAt,
                           source: state.source);
                     } else if (state is AnimeMultiplePicturesState) {
+                      if (state.pictureUrls.isEmpty) {
+                        return const Center(
+                          child: Column(
+                            children: [
+                              Text(
+                                'Try to fetch again please',
+                              ),
+                              Text(
+                                'Or change page make it lower.',
+                              ),
+                              CustomLoadingCircle(),
+                            ],
+                          ),
+                        );
+                      }
                       return AnimePicturesMultiple(
                         pictureUrls: state.pictureUrls,
                         uploadedAt: state.uploadedAt,
@@ -73,7 +88,7 @@ class DefinedCategoryPage extends StatelessWidget {
                         ),
                       );
                     }
-                    return ReminderAboutNsfw();
+                    return const ReminderAboutNsfw();
                   },
                 )
               ],

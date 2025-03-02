@@ -13,8 +13,7 @@ final class AnimeInfoError extends AnimeInfoState {
 final class AnimeInfoLoading extends AnimeInfoState {}
 
 final class AnimeInfoLoaded extends AnimeInfoState {
-
-  final Map<String,dynamic> animeCategories;
-  AnimeInfoLoaded({required this.animeCategories});
-
+  final Map<String, dynamic> animeCategories;
+   final List<dynamic> categoriesList;
+  AnimeInfoLoaded({required this.animeCategories,required this.categoriesList});
 }

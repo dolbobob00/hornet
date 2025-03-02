@@ -15,7 +15,6 @@ class FullScreenImageView extends StatelessWidget {
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          // Full screen image with gesture detection
           GestureDetector(
             onTap: () => Navigator.pop(context),
             child: SizedBox.expand(

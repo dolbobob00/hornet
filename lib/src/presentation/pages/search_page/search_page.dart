@@ -1,3 +1,5 @@
+import 'package:restful_solid_bloc/widgets/my_custom_card.dart';
+
 import 'search_page_imports.dart';
 
 class SearchPage extends StatelessWidget {
@@ -33,20 +35,33 @@ class SearchPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: SearchField(),
             ),
-            ExpansionTileRules(),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: MyCustomCard(
+                child: ExpansionTileRules(),
+              ),
+            ),
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(
-                    'Welcome to the Horny Anime App!',
-                    style: TextStyle(fontSize: 24),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: MyCustomCard(
+                      child: Text(
+                        'Search for you\'r waifu',
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   BlocBuilder<AnimePicsCubit, AnimePicsState>(
                     bloc: bloc,
                     builder: (context, state) {
@@ -58,7 +73,7 @@ class SearchPage extends StatelessWidget {
                         );
                       } else if (state is AnimeMultiplePicturesState) {
                         if (state.pictureUrls.isEmpty) {
-                          return Center(
+                          return const Center(
                             child: Column(
                               children: [
                                 Text(
@@ -72,7 +87,7 @@ class SearchPage extends StatelessWidget {
                             ),
                           );
                         }
-                        AnimePicturesMultiple(
+                        return AnimePicturesMultiple(
                           pictureUrls: state.pictureUrls,
                           uploadedAt: state.uploadedAt,
                           source: state.source,
@@ -88,7 +103,12 @@ class SearchPage extends StatelessWidget {
                           ),
                         );
                       }
-                     return ReminderAboutNsfw();
+                      return const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: MyCustomCard(
+                          child: ReminderAboutNsfw(),
+                        ),
+                      );
                     },
                   )
                 ],
