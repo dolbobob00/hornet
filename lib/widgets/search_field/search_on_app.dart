@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restful_solid_bloc/src/data/constants.dart';
-import 'package:restful_solid_bloc/src/data/repositories/data_anime_repo.dart';
+
 import 'package:restful_solid_bloc/src/domain/anime_tags.dart';
-import 'package:restful_solid_bloc/src/presentation/cubit/home_page_cubit/cubit/anime_pics_cubit.dart';
 import 'package:restful_solid_bloc/src/theme/app_colors.dart';
-import 'package:restful_solid_bloc/src/constants/ui_constants.dart';
+import 'package:restful_solid_bloc/src/theme/ui_constants.dart';
 
 class SearchFieldForApp extends StatefulWidget {
   const SearchFieldForApp({super.key});

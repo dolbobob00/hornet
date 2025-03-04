@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restful_solid_bloc/src/domain/url_service.dart';
-import 'package:restful_solid_bloc/widgets/image_card/share_button.dart';
+import 'package:restful_solid_bloc/widgets/anime_card/image_card/share_button.dart';
 import '../cached_image.dart';
 import 'download_button.dart';
 import '../media_player/media_player.dart';

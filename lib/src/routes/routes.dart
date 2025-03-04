@@ -5,10 +5,10 @@ import 'package:restful_solid_bloc/src/domain/anime_tags.dart';
 import 'package:restful_solid_bloc/src/presentation/pages/search_page/search_page.dart';
 import 'package:restful_solid_bloc/src/presentation/pages/secondary_page/defined_category_page.dart';
 import 'package:restful_solid_bloc/src/presentation/pages/splash_screen/splash_screen.dart';
-import 'package:restful_solid_bloc/widgets/fullscreen_image/fullscreen_image_view.dart';
+import 'package:restful_solid_bloc/widgets/anime_card/fullscreen_image/fullscreen_image_view.dart';
 
 import '../presentation/pages/home_page/home_page.dart';
-import '../presentation/pages/home_page/home_page_new.dart';
+import '../presentation/pages/random_page/random_anime_page.dart';
 
 class Routes {
   GoRouter routerConfig = GoRouter(
@@ -39,7 +39,7 @@ class Routes {
         path: '/home',
         name: 'home',
         pageBuilder: (context, state) => CustomTransitionPage(
-          child: HomePageNew(),
+          child: HomePage(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             // Slide transition from right for home page
             return SlideTransition(

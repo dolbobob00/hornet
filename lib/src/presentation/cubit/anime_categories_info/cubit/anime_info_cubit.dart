@@ -17,9 +17,16 @@ class AnimeInfoCubit extends Cubit<AnimeInfoState> {
       final data = await repository.getCategoryAndInfo();
       final categoriesList =
           (data['versatile'] as List) + (data['nsfw'] as List);
-
+      final categoriesListImagesUrl = await repository.getImageForEachCategory(
+        categories: categoriesList
+            .map(
+              (e) => e['name'].toString(),
+            )
+            .toList(),
+      );
       emit(
         AnimeInfoLoaded(
+          imagesUrl: categoriesListImagesUrl,
           categoriesList: categoriesList,
           animeCategories: data,
         ),

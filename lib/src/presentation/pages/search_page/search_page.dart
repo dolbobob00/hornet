@@ -1,5 +1,3 @@
-import 'package:restful_solid_bloc/widgets/my_custom_card.dart';
-
 import 'search_page_imports.dart';
 
 class SearchPage extends StatelessWidget {

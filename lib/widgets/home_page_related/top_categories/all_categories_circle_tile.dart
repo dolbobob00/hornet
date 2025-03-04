@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:restful_solid_bloc/src/theme/app_colors.dart';
+import 'package:restful_solid_bloc/widgets/custom_loading_circle.dart';
+
+import '../../../src/theme/ui_constants.dart';
 
 class AllCategoriesCircleTile extends StatelessWidget {
   const AllCategoriesCircleTile({super.key, required this.url, this.text});
   final String? text;
   final String url;
+
+  static const String _fallbackImageUrl =
+      'https://avatars.mds.yandex.net/i?id=421d7fb22377db0d3ffedb433027eaa97969920f-8391913-images-thumbs&ref=rim&n=33&w=444&h=250';
+
   String _capitalizeFirstLetter(String text) {
     return text[0].toUpperCase() + text.substring(1);
   }
@@ -28,7 +36,8 @@ class AllCategoriesCircleTile extends StatelessWidget {
         }
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding:
+            const EdgeInsets.symmetric(horizontal: UIConstants.paddingSmall),
         child: Column(
           spacing: 10,
           mainAxisSize: MainAxisSize.min,
@@ -41,12 +50,20 @@ class AllCategoriesCircleTile extends StatelessWidget {
                 shape: BoxShape.circle,
                 border: Border.all(
                   color: AppColors.primaryWhite,
-                  width: 3,
+                  width: UIConstants.borderWidthMedium,
                 ),
-                image: DecorationImage(
+              ),
+              child: ClipOval(
+                child: CachedNetworkImage(
+                  imageUrl: url.isNotEmpty ? url : _fallbackImageUrl,
                   fit: BoxFit.cover,
-                  image: NetworkImage(
-                      'https://avatars.mds.yandex.net/get-mpic/1704691/img_id9000352014314714834.jpeg/orig'),
+                  placeholder: (context, url) => const Center(
+                    child: CustomLoadingCircle(size: 20),
+                  ),
+                  errorWidget: (context, url, error) => const Icon(
+                    Icons.error,
+                    color: Colors.red,
+                  ),
                 ),
               ),
             ),

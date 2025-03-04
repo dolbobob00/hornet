@@ -4,6 +4,7 @@ import 'package:restful_solid_bloc/src/data/constants.dart';
 import 'package:restful_solid_bloc/src/data/repositories/data_anime_repo.dart';
 import 'package:restful_solid_bloc/src/data/repositories/quotes_repo.dart';
 import 'package:restful_solid_bloc/src/domain/anime_tags.dart';
+import 'package:restful_solid_bloc/src/domain/local_database.dart';
 import 'package:restful_solid_bloc/src/domain/network_client.dart';
 import 'package:restful_solid_bloc/src/domain/url_service.dart';
 
@@ -39,6 +40,9 @@ class GetItServiceLocator implements IServiceLocator {
     // Tags service for anime content categorization
     getIt.registerLazySingleton<IAnimeTags>(
       () => AnimeTagsImpl(),
+    );
+    getIt.registerLazySingleton<ILocalDatabase>(
+      () => HiveLocalDatabase(),
     );
     // URL handling service for external links
     getIt.registerLazySingleton<IUrlService>(
