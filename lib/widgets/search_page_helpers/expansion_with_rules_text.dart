@@ -9,7 +9,9 @@ class ExpansionWithRules extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: RichText(
         text: TextSpan(
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                color: Colors.white,
+              ),
           children: [
             TextSpan(
               text: '- Dont forget to check page, on button in right corner\n',

@@ -1,5 +1,8 @@
 import 'dart:math';
 import 'package:dio/dio.dart';
+import 'package:get_it/get_it.dart';
+import 'package:restful_solid_bloc/src/domain/anime_tags.dart';
+import 'package:restful_solid_bloc/src/domain/local_database.dart';
 import 'package:restful_solid_bloc/src/domain/network_client.dart';
 
 // Base repository interface
@@ -16,6 +19,8 @@ abstract class IAnimeRepository {
 // Interface for category info operations
 abstract class ICategoryRepository {
   Future<Map<String, dynamic>> getCategoryAndInfo();
+  Future<List<String>> getImageForEachCategory(
+      {required List<String> categories});
 }
 
 //Category repo
@@ -27,6 +32,19 @@ class CategoryRepository implements ICategoryRepository {
     required this.networkClient,
   });
   Map<String, dynamic> categoryInfo = {};
+
+  List<String> categoriesList = [];
+
+  void _makeCategoriesAsList(dynamic responce) {
+    final categoriesMap =
+        (responce['versatile'] as List) + (responce['nsfw'] as List);
+    for (var element in categoriesMap) {
+      categoriesList.add(
+        element['name'].toString(),
+      );
+    }
+    GetIt.I<IAnimeTags>().allAvailableTags = categoriesList;
+  }
 
   @override
   Future<Map<String, dynamic>> getCategoryAndInfo() async {
@@ -43,8 +61,47 @@ class CategoryRepository implements ICategoryRepository {
     }
   }
 
+  @override
+  Future<List<String>> getImageForEachCategory(
+      {required List<String> categories}) async {
+    if (GetIt.I<ILocalDatabase>().readData('categoryURL') != null) {
+      return GetIt.I<ILocalDatabase>().readData('categoryURL');
+    }
+    List<String> imagesUrl = [];
+    final getIt = GetIt.instance<IAnimeRepository>(
+      instanceName: 'waifuRepository',
+    );
+    for (var category in categories) {
+      try {
+        await getIt.getAnimeMedia(
+          tags: [
+            category.toLowerCase(),
+          ],
+          isNsfw: false,
+          amount: 2,
+        ).then(
+          (value) {
+            imagesUrl.add(
+              value['images'][0]['url'],
+            );
+          },
+        );
+      } catch (e) {
+        imagesUrl.add(
+          'https://i.pinimg.com/originals/f4/4b/96/f44b968e1981f48a3cadba22351150c0.jpg',
+        );
+      }
+    }
+    GetIt.I<ILocalDatabase>().writeData(
+      'categoryURL',
+      imagesUrl,
+    );
+    return imagesUrl;
+  }
+
   Map<String, dynamic> handleResponse(Response response) {
     if (response.statusCode == 200) {
+      _makeCategoriesAsList(response.data);
       return response.data;
     }
     throw Exception('Failed to load anime details: ${response.statusCode}');

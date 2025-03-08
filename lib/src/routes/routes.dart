@@ -5,8 +5,10 @@ import 'package:restful_solid_bloc/src/domain/anime_tags.dart';
 import 'package:restful_solid_bloc/src/presentation/pages/search_page/search_page.dart';
 import 'package:restful_solid_bloc/src/presentation/pages/secondary_page/defined_category_page.dart';
 import 'package:restful_solid_bloc/src/presentation/pages/splash_screen/splash_screen.dart';
+import 'package:restful_solid_bloc/widgets/anime_card/fullscreen_image/fullscreen_image_view.dart';
 
 import '../presentation/pages/home_page/home_page.dart';
+import '../presentation/pages/random_page/random_anime_page.dart';
 
 class Routes {
   GoRouter routerConfig = GoRouter(
@@ -54,12 +56,31 @@ class Routes {
         ),
       ),
       GoRoute(
+        path: '/random',
+        name: 'random',
+        pageBuilder: (context, state) => CustomTransitionPage(
+          child: RandomAnimePage(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            // Slide transition from right for home page
+            return SlideTransition(
+              position: animation.drive(
+                Tween(
+                  begin: const Offset(1.0, 0.0),
+                  end: Offset.zero,
+                ).chain(CurveTween(curve: Curves.easeInOut)),
+              ),
+              child: child,
+            );
+          },
+          key: state.pageKey,
+        ),
+      ),
+      GoRoute(
         path: '/search',
         name: 'search',
         pageBuilder: (context, state) => CustomTransitionPage(
           child: SearchPage(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            // Fade and scale transition for search page
             return FadeTransition(
               opacity: animation.drive(
                 CurveTween(curve: Curves.easeInOut),
@@ -74,42 +95,81 @@ class Routes {
         ),
       ),
       GoRoute(
-          path: '/defined',
-          name: 'category',
-          pageBuilder: (context, state) {
-            final extra = state.extra as String;
+        path: '/defined',
+        name: 'category',
+        pageBuilder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>;
+          if ((extra['isCheckLast'] ?? false) == true) {
+            GetIt.I<IAnimeTags>().clearTags();
+            GetIt.I<IAnimeTags>().changeAllTagsTo =
+                (extra['tag'] as String).split(
+              ' ',
+            );
+          } else {
             GetIt.I<IAnimeTags>().addTag(
-              tag: extra,
+              tag: extra['tag']?.toString() ?? '',
             );
-            return CustomTransitionPage(
-              child: DefinedCategoryPage(
-                tags: GetIt.I<IAnimeTags>().tags,
-              ),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                // Size and fade transition for category page
-                return SizeTransition(
-                  sizeFactor: animation,
-                  axisAlignment: 0.0,
-                  child: FadeTransition(
-                    opacity: animation.drive(
-                      CurveTween(curve: Curves.easeInOut),
-                    ),
-                    child: SlideTransition(
-                      position: animation.drive(
-                        Tween(
-                          begin: const Offset(0.0, 1.0),
-                          end: Offset.zero,
-                        ).chain(CurveTween(curve: Curves.easeInOut)),
-                      ),
-                      child: child,
-                    ),
+          }
+          GetIt.I<IAnimeTags>().setLastTag = {
+            'tag': GetIt.I<IAnimeTags>().tags.join(' '),
+            'route': 'category',
+          };
+          return CustomTransitionPage(
+            child: DefinedCategoryPage(
+              tags: GetIt.I<IAnimeTags>().tags,
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              // Size and fade transition for category page
+              return SizeTransition(
+                sizeFactor: animation,
+                axisAlignment: 0.0,
+                child: FadeTransition(
+                  opacity: animation.drive(
+                    CurveTween(curve: Curves.easeInOut),
                   ),
-                );
-              },
-              key: state.pageKey,
-            );
-          }),
+                  child: SlideTransition(
+                    position: animation.drive(
+                      Tween(
+                        begin: const Offset(0.0, 1.0),
+                        end: Offset.zero,
+                      ).chain(CurveTween(curve: Curves.easeInOut)),
+                    ),
+                    child: child,
+                  ),
+                ),
+              );
+            },
+            key: state.pageKey,
+          );
+        },
+      ),
+      GoRoute(
+        path: '/fullscreen_image',
+        name: 'fullscreen_image',
+        pageBuilder: (context, state) {
+          final extra = state.extra as String;
+          return CustomTransitionPage(
+            child: FullScreenImageView(
+              imageUrl: extra,
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              // Size and fade transition for category page
+              return FadeTransition(
+                opacity: animation.drive(
+                  CurveTween(curve: Curves.easeInOut),
+                ),
+                child: ScaleTransition(
+                  scale: animation,
+                  child: child,
+                ),
+              );
+            },
+            key: state.pageKey,
+          );
+        },
+      ),
     ],
   );
 }

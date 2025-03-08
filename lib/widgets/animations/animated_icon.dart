@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restful_solid_bloc/src/presentation/cubit/animations_cubit/cubit/animations_cubit.dart';
+import 'package:restful_solid_bloc/src/theme/ui_constants.dart';
 
 class CustomAnimatedIcon extends StatefulWidget {
-  const CustomAnimatedIcon(
-      {super.key, required this.animIcon, required this.size, this.color});
+  const CustomAnimatedIcon({
+    super.key,
+    required this.animIcon,
+    required this.size,
+    this.color,
+    this.onTap,
+  });
   final AnimatedIconData animIcon;
   final double size;
+  final VoidCallback? onTap;
   final Color? color;
   @override
   State<CustomAnimatedIcon> createState() => _CustomAnimatedIconState();
@@ -21,36 +28,49 @@ class _CustomAnimatedIconState extends State<CustomAnimatedIcon>
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: Duration(
-        milliseconds: 300,
+      duration: const Duration(
+        milliseconds: UIConstants.animationDurationMedium,
       ),
     );
   }
 
-  void playAnimation() {
-    setState(() {
-      isPlaying = !isPlaying;
-      if (isPlaying) {
-        controller.forward();
-      } else {
-        controller.reverse();
-      }
-    });
+  @override
+  void dispose() {
+    // Dispose the controller before super.dispose()
+    controller.dispose();
+    super.dispose();
+  }
+
+
+  void playAnimation(bool isOpened) {
+    if (!mounted) return;
+    if (isOpened) {
+      controller.forward();
+    } else {
+      controller.reverse();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AnimationsCubit, AnimationsState>(
-      listener: (context, state) {
-        if (state is AnimationsStarted) {
-          playAnimation();
+    return GestureDetector(
+      onTap: () {
+        if (widget.onTap != null) {
+          widget.onTap!();
         }
       },
-      child: AnimatedIcon(
-        color: widget.color,
-        icon: widget.animIcon,
-        size: widget.size,
-        progress: controller,
+      child: BlocListener<AnimationsCubit, AnimationsState>(
+        listener: (context, state) {
+          if (state is AnimationsStarted) {
+            playAnimation(state.shouldStart);
+          }
+        },
+        child: AnimatedIcon(
+          color: widget.color,
+          icon: widget.animIcon,
+          size: widget.size,
+          progress: controller,
+        ),
       ),
     );
   }

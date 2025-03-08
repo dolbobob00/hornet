@@ -13,6 +13,9 @@ class ExpansionTileRules extends StatelessWidget {
         children: [
           Text(
             'Rules of tag writing',
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: Colors.white,
+                ),
           ),
           Icon(
             Icons.info,

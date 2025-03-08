@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:restful_solid_bloc/src/domain/anime_tags.dart';
 import 'package:restful_solid_bloc/src/presentation/cubit/home_page_cubit/cubit/anime_pics_cubit.dart';
+import 'package:restful_solid_bloc/widgets/my_custom_card.dart';
 
 // ignore: must_be_immutable
 class AmountTabBar extends StatefulWidget {
@@ -17,7 +18,14 @@ class _AmountTabBarState extends State<AmountTabBar> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('Fetch that amount of pictures: '),
+        MyCustomCard(
+          child: Text(
+            'Fetch that amount of pictures: ',
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                ),
+          ),
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -62,11 +70,13 @@ class _AmountTabBarState extends State<AmountTabBar> {
             ),
             Column(
               children: [
-                Text(
-                  'Show gif?',
-                  style: TextStyle(
-                    fontSize: 8,
-                    color: Colors.grey,
+                MyCustomCard(
+                  child: Text(
+                    'Show gif?',
+                    style: TextStyle(
+                      fontSize: 8,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 Switch.adaptive(
