@@ -1,10 +1,24 @@
-# Hornet - Anime Image Gallery App
+# Hornet - Anime Image Fetching App
 
+i though its
 A Flutter application that demonstrates clean architecture, SOLID principles, and BLoC pattern while fetching and displaying anime images.
 
 ![1000145542](https://github.com/user-attachments/assets/815dfe4a-d0a2-435f-b6d4-71eede3d8abc) - App Icon
 
-![Screenshot_2025-02-27-19-49-22-946_com example restful_solid_bloc](https://github.com/user-attachments/assets/f1b2ebb3-ead4-47b3-895a-714c11a26ced) ![Screenshot_2025-02-27-19-50-32-504_com example restful_solid_bloc](https://github.com/user-attachments/assets/3623ebab-2a56-417e-82e6-debbab97b2f4) ![Screenshot_2025-02-27-19-51-26-700_com example restful_solid_bloc](https://github.com/user-attachments/assets/cd166336-4114-4711-a7e1-4e3c658d81ab) ![Screenshot_2025-02-27-19-49-26-377_com example restful_solid_bloc](https://github.com/user-attachments/assets/6b881986-80b5-4e5d-8bc8-f3f0a448d456)
+NEW UI(in progress...)
+HomePage
+1)SliverAppbar with information about you(future integration of user logic)
+2)Unique images for categories listview (autofetch when launch app, and caching to hive local db),also can be refetched by tapping on 3 dots near and confirm.
+3) Continue at with saving on what category you was last(almost done, just need to commit and merge)
+![1000146486](https://github.com/user-attachments/assets/b1461958-72b7-470e-8a3d-cf1d2516c92a)
+Drawer
+1) Has Quote api fetching, and categories displating.
+2) For now its all
+![1000146487](https://github.com/user-attachments/assets/9e5544da-1fb2-48e8-92da-c099b9225ba0)
+
+
+old ui:
+![Screenshot_2025-02-27-19-50-32-504_com example restful_solid_bloc](https://github.com/user-attachments/assets/3623ebab-2a56-417e-82e6-debbab97b2f4) ![Screenshot_2025-02-27-19-51-26-700_com example restful_solid_bloc](https://github.com/user-attachments/assets/cd166336-4114-4711-a7e1-4e3c658d81ab)
 
 ## Features
 
