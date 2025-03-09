@@ -21,7 +21,7 @@ class _AmountTabBarState extends State<AmountTabBar> {
         MyCustomCard(
           child: Text(
             'Fetch that amount of pictures: ',
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                   color: Theme.of(context).colorScheme.inversePrimary,
                 ),
           ),
@@ -40,6 +40,13 @@ class _AmountTabBarState extends State<AmountTabBar> {
               },
               child: Text(
                 '5-pics',
+                style: MediaQuery.of(context).size.width > 600
+                    ? Theme.of(context).textTheme.headlineMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                        )
+                    : Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                        ),
               ),
             ),
             ElevatedButton(
@@ -53,6 +60,13 @@ class _AmountTabBarState extends State<AmountTabBar> {
               },
               child: Text(
                 '10-pics',
+                style: MediaQuery.of(context).size.width > 600
+                    ? Theme.of(context).textTheme.headlineMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                        )
+                    : Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                        ),
               ),
             ),
             ElevatedButton(
@@ -66,6 +80,13 @@ class _AmountTabBarState extends State<AmountTabBar> {
               },
               child: Text(
                 '15-pics',
+                style: MediaQuery.of(context).size.width > 600
+                    ? Theme.of(context).textTheme.headlineMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                        )
+                    : Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                        ),
               ),
             ),
             Column(
@@ -73,10 +94,15 @@ class _AmountTabBarState extends State<AmountTabBar> {
                 MyCustomCard(
                   child: Text(
                     'Show gif?',
-                    style: TextStyle(
-                      fontSize: 8,
-                      color: Colors.white,
-                    ),
+                    style: MediaQuery.of(context).size.width > 600
+                        ? Theme.of(context).textTheme.headlineMedium!.copyWith(
+                              color:
+                                  Theme.of(context).colorScheme.inversePrimary,
+                            )
+                        : Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              color:
+                                  Theme.of(context).colorScheme.inversePrimary,
+                            ),
                   ),
                 ),
                 Switch.adaptive(

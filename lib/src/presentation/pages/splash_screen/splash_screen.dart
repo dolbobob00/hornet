@@ -1,5 +1,4 @@
 import 'package:restful_solid_bloc/src/presentation/pages/home_page/home_page_imports.dart';
-
 import 'splash_screen_imports.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -38,13 +37,7 @@ class _SplashScreenState extends State<SplashScreen>
     );
     context.read<AnimeInfoCubit>().fetchCategories();
     context.read<QuotesCubit>().fetchQuote();
-    GetIt.I<ILocalDatabase>().readData('lastTag').then(
-      (value) {
-        if (value != null) {
-          GetIt.I<IAnimeTags>().setLastTag(value);
-        }
-      },
-    );
+  
     _controller.forward();
   }
 

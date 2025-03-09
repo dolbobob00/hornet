@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restful_solid_bloc/src/domain/anime_tags.dart';
-import 'package:restful_solid_bloc/src/presentation/pages/search_page/search_page.dart';
 import 'package:restful_solid_bloc/src/presentation/pages/secondary_page/defined_category_page.dart';
 import 'package:restful_solid_bloc/src/presentation/pages/splash_screen/splash_screen.dart';
 import 'package:restful_solid_bloc/widgets/anime_card/fullscreen_image/fullscreen_image_view.dart';
