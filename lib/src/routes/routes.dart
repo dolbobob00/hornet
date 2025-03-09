@@ -9,6 +9,7 @@ import 'package:restful_solid_bloc/widgets/anime_card/fullscreen_image/fullscree
 
 import '../presentation/pages/home_page/home_page.dart';
 import '../presentation/pages/random_page/random_anime_page.dart';
+import '../presentation/pages/search_page/search_page_new.dart';
 
 class Routes {
   GoRouter routerConfig = GoRouter(
