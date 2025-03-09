@@ -6,15 +6,27 @@ A Flutter application that demonstrates clean architecture, SOLID principles, an
 ![1000145542](https://github.com/user-attachments/assets/815dfe4a-d0a2-435f-b6d4-71eede3d8abc) - App Icon
 
 NEW UI(in progress...)
+
+SplashScreen
+1) While loading fetching usefull information, quotes, anime category pictures, and Hive info about ,,Continue at"
+![1000146498](https://github.com/user-attachments/assets/e5e2d50d-4433-4a8e-a998-e15b86813a64)
+
+
 HomePage
 1)SliverAppbar with information about you(future integration of user logic)
 2)Unique images for categories listview (autofetch when launch app, and caching to hive local db),also can be refetched by tapping on 3 dots near and confirm.
 3) Continue at with saving on what category you was last(almost done, just need to commit and merge)
 ![1000146486](https://github.com/user-attachments/assets/b1461958-72b7-470e-8a3d-cf1d2516c92a)
 Drawer
-1) Has Quote api fetching, and categories displating.
-2) For now its all
-![1000146487](https://github.com/user-attachments/assets/9e5544da-1fb2-48e8-92da-c099b9225ba0)
+1) Has Quote api display, and categories displaying.
+2) Animated expansion tiles
+3) future will be added settings and quit,profile tiles
+![1000146500](https://github.com/user-attachments/assets/55302436-17bd-4396-a7c8-886eaebfbfdc)
+
+RandomImage fetcher
+1) Fetch picked amount of images with picked amount of settings.
+2) Not be saved to ,,continue at", because its random page
+![1000146499](https://github.com/user-attachments/assets/50e601f3-1448-4941-bc68-2e531fc2c24a)
 
 
 old ui:
