@@ -4,7 +4,7 @@ import '../../src/theme/ui_constants.dart';
 
 class AvatarProfile extends StatelessWidget {
   const AvatarProfile({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
     return Stack(

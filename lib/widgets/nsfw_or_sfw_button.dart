@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:restful_solid_bloc/src/presentation/pages/home_page/home_page_imports.dart';
 import '../src/domain/anime_tags.dart';
 
 class NsfwSfwRowFab extends StatefulWidget {
@@ -35,37 +36,60 @@ class _NsfwSfwRowFabState extends State<NsfwSfwRowFab> {
   @override
   Widget build(BuildContext context) {
     return AnimatedCrossFade(
-      firstChild: FloatingActionButton(
+      firstChild: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.all(
+            AppColors.secondaryRed,
+          ),
+          splashFactory: InkSparkle.splashFactory,
+          padding: WidgetStateProperty.all(
+            EdgeInsets.symmetric(horizontal: 10),
+          ),
+        ),
         onPressed: _toggleNSFW,
-        heroTag: 'btn3',
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Row(
           children: [
-            const Icon(Icons.image),
-            Text(
-              'NSFW\n now',
-              style: const TextStyle(
-                fontSize: 10,
-                overflow: TextOverflow.ellipsis,
+            SizedBox(
+              width: 35,
+              height: 35,
+              child: Image.asset(
+                'assets/images/icons/remICON.png',
+                fit: BoxFit.contain,
               ),
-            )
+            ),
+            Text(
+              'Now you will fetch NSFW',
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                  ),
+            ),
           ],
         ),
       ),
-      secondChild: FloatingActionButton(
+      secondChild: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.all(AppColors.primary),
+          padding: WidgetStateProperty.all(
+            EdgeInsets.symmetric(horizontal: 10),
+          ),
+        ),
         onPressed: _toggleNSFW,
-        heroTag: 'btn4',
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Row(
           children: [
-            const Icon(Icons.image),
-            Text(
-              'SFW \nnow',
-              style: const TextStyle(
-                fontSize: 10,
-                overflow: TextOverflow.ellipsis,
+            SizedBox(
+              width: 35,
+              height: 35,
+              child: Image.asset(
+                'assets/images/icons/ramICON.png',
+                fit: BoxFit.contain,
               ),
-            )
+            ),
+            Text(
+              'Now you will fetch SFW',
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                  ),
+            ),
           ],
         ),
       ),

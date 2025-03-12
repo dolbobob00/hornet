@@ -1,3 +1,6 @@
+import 'package:restful_solid_bloc/src/domain/local_database.dart';
+import 'package:restful_solid_bloc/src/presentation/pages/home_page/home_page_imports.dart';
+
 abstract class IAnimeTags {
   List<String> get tags;
   bool get showGif;
@@ -40,8 +43,13 @@ class AnimeTagsImpl implements IAnimeTags {
         'https://steamuserimages-a.akamaihd.net/ugc/187291001665850410/70264D31640E4F5D80F2B27B4AFBE076AE0F9AE2/?imw=512&amp;imh=287&amp;ima=fit&amp;impolicy=Letterbox&amp;imcolor=%23000000&amp;letterbox=true'
   };
   @override
-  set setLastTag(Map<String, dynamic> lastCheckedTag) =>
-      savedLastTagChecked = lastCheckedTag;
+  set setLastTag(Map<String, dynamic> lastCheckedTag) {
+    GetIt.I<ILocalDatabase>().writeData(
+      'lastTag',
+      lastCheckedTag,
+    );
+    savedLastTagChecked = lastCheckedTag;
+  }
 
   @override
   Map<String, dynamic> get getLastCheckedTag => savedLastTagChecked;

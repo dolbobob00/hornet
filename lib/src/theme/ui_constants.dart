@@ -30,7 +30,7 @@ class UIConstants {
   static const double dividerThickness = 2.0;
 
   // Layout multipliers
-  static const double appBarHeightMultiplier = 0.1;
+  static const double appBarHeightMultiplier = 0.09;
   static const double listViewHeightMultiplier = 0.25;
   static const double mainContainerHeightMultiplier = 0.4;
   static const double bottomContainerHeightMultiplier = 0.2;

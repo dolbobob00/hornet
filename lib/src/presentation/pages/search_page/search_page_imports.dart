@@ -12,3 +12,8 @@ export 'package:restful_solid_bloc/widgets/search_page_helpers/expansion_tile_ru
 export 'package:restful_solid_bloc/widgets/search_page_helpers/page_counter_modal.dart';
 export '../../../../widgets/anime_card/anime_pictures_view/reminder.dart';
 export 'package:restful_solid_bloc/widgets/my_custom_card.dart';
+
+export '../../../../widgets/animations/animated_icon.dart';
+export '../../../../widgets/appbar/my_custom_appbar.dart';
+export '../../../../widgets/appbar/name_text.dart';
+export '../../../theme/app_colors.dart';

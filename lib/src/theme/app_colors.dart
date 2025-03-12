@@ -7,7 +7,13 @@ class AppColors {
   static const primary = Color(0xFFA2B2FC);
   static const primaryBlack = Color(0xFF424242);
   static const primaryWhite = Color(0xFFFFFFFF);
+  static const primaryRed = Color(
+    0xFFE80606,
+  );
   // Secondary colors
+  static const secondaryRed = Color(
+    0xFFC62020,
+  );
   static const secondaryGradient = LinearGradient(
     colors: [
       Color(
@@ -19,6 +25,16 @@ class AppColors {
     ],
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
+  );
+  static const secondaryRedGradient = LinearGradient(
+    colors: [
+      Color(0xFFFF1111),
+      Color(
+        0xFFBA0B20,
+      ),
+    ],
+    begin: Alignment.bottomLeft,
+    end: Alignment.topLeft,
   );
   static const secondaryGradientInverse = LinearGradient(
     colors: [

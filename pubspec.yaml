@@ -40,7 +40,9 @@ flutter:
     - assets/animations/
     - assets/logo/
     - assets/images/background/
+    - assets/images/smth/
     - assets/fonts/ubuntu/
+    - assets/images/icons/
 
   fonts:
     - family: Ubuntu

@@ -8,20 +8,15 @@ import 'package:restful_solid_bloc/src/domain/local_database.dart';
 import 'package:restful_solid_bloc/src/domain/network_client.dart';
 import 'package:restful_solid_bloc/src/domain/url_service.dart';
 
-/// Interface for service locator setup
-/// Provides a contract for dependency injection configuration
 abstract class IServiceLocator {
   void getItSetup();
 }
 
-/// Implementation of service locator using GetIt
-/// Responsible for registering all dependencies in the application
 class GetItServiceLocator implements IServiceLocator {
   final GetIt getIt = GetIt.instance;
 
   @override
   void getItSetup() {
-    // Core dependencies
     // Register constants that are used throughout the app
     getIt.registerSingleton<Constants>(
       Constants(),

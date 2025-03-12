@@ -46,12 +46,9 @@ class ImageCard extends StatelessWidget {
               : CachedImage(
                   imageUrl: imageUrl,
                   width: width ?? double.infinity,
-                  height: height ?? MediaQuery.of(context).size.height * 0.45,
+                  height: height ?? MediaQuery.of(context).size.height * 0.45 + 30,
                   fit: fit ?? BoxFit.contain,
                 ),
-        ),
-        Text(
-          date ?? '',
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -73,9 +70,10 @@ class ImageCard extends StatelessWidget {
                       child: LayoutBuilder(
                         builder: (context, constraints) {
                           return RichText(
-                            maxLines: 3,
+                            maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             text: TextSpan(
+                              style: Theme.of(context).textTheme.bodyMedium,
                               children: [
                                 const TextSpan(
                                   text: 'Source: ',
@@ -85,9 +83,13 @@ class ImageCard extends StatelessWidget {
                                 ),
                                 TextSpan(
                                   text: source ?? imageUrl,
-                                  style: const TextStyle(
-                                    color: Colors.blue,
-                                  ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        color: Colors.blue,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                 ),
                                 const TextSpan(
                                   text:
