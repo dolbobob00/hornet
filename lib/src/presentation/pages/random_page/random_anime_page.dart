@@ -10,7 +10,7 @@ class RandomAnimePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<AnimePicsCubit>(context);
+    final bloc = context.read<AnimePicsCubit>();
     return Scaffold(
       drawer: MyCustomDrawer(),
       backgroundColor: AppColors.primaryWhite,

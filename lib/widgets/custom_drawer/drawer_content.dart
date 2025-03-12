@@ -63,7 +63,7 @@ class DrawerContent extends StatelessWidget {
                     name: 'Home',
                     description: 'Go to Home Page',
                     onTap: () {
-                      context.goNamed(
+                      context.pushNamed(
                         'home',
                       );
                     },
@@ -72,8 +72,17 @@ class DrawerContent extends StatelessWidget {
                     name: 'Search',
                     description: 'Go to Search Page',
                     onTap: () {
-                      context.goNamed(
+                      context.pushNamed(
                         'search',
+                      );
+                    },
+                  ),
+                  DrawerListTile(
+                    name: 'Random',
+                    description: 'Go to Random Page',
+                    onTap: () {
+                      context.pushNamed(
+                        'random',
                       );
                     },
                   ),

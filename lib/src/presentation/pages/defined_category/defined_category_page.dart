@@ -1,15 +1,19 @@
+import 'package:restful_solid_bloc/src/theme/app_colors.dart';
+import 'package:restful_solid_bloc/widgets/animations/animated_icon.dart';
 
-import 'search_page_imports.dart';
+import '../../../../widgets/appbar/my_custom_appbar.dart';
+import '../../../../widgets/appbar/name_text.dart';
+import 'defined_category_imports.dart';
 
-class SearchPage extends StatelessWidget {
-  const SearchPage({
-    super.key,
-  });
-
+class DefinedCategoryPage extends StatelessWidget {
+  const DefinedCategoryPage({super.key, required this.tags});
+  final List<String> tags;
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<AnimePicsCubit>();
     return Scaffold(
+      drawer: MyCustomDrawer(),
+      backgroundColor: AppColors.primaryWhite,
       body: NestedScrollView(
         floatHeaderSlivers: true,
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
@@ -23,7 +27,7 @@ class SearchPage extends StatelessWidget {
             title: Align(
               alignment: Alignment.centerLeft,
               child: NameText(
-                title: 'Search for some NSFW',
+                title: '$tags',
                 subtitle: 'Take a joy!',
               ),
             ),
@@ -44,7 +48,6 @@ class SearchPage extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SearchField(),
               Center(
                 child: Column(
                   children: <Widget>[
@@ -67,11 +70,9 @@ class SearchPage extends StatelessWidget {
                                     'Try to fetch again please',
                                   ),
                                   Text(
-                                    'Or change page make it lower.',
+                                    'Maybe problems somehow.',
                                   ),
-                                  Text(
-                                    'Or change tag you trying to find.',
-                                  ),
+                                  CustomLoadingCircle(),
                                 ],
                               ),
                             );
@@ -86,20 +87,13 @@ class SearchPage extends StatelessWidget {
                             message: state.message,
                           );
                         } else if (state is AnimePicsLoading) {
-                          return const Center(
-                            child: CustomLoadingCircle(
-                              size: 100.0,
-                            ),
+                          return const CustomLoadingCircle(
+                            size: 100.0,
                           );
                         }
-                        return const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: MyCustomCard(
-                            child: ReminderAboutNsfw(),
-                          ),
-                        );
+                        return const ReminderAboutNsfw();
                       },
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -115,48 +109,35 @@ class SearchPage extends StatelessWidget {
                   ),
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 16.0, left: 16, right: 16),
-                        child: Divider(
-                          color: AppColors.background,
-                          endIndent: MediaQuery.of(context).size.width * 0.4,
-                          indent: MediaQuery.of(context).size.width * 0.4,
-                          height: 3,
-                          thickness: 2,
-                        ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 16.0, left: 16, right: 16),
+                      child: Divider(
+                        color: AppColors.background,
+                        endIndent: MediaQuery.of(context).size.width * 0.4,
+                        indent: MediaQuery.of(context).size.width * 0.4,
+                        height: 3,
+                        thickness: 2,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ElevatedButton(
-                          onPressed: () => showModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return PageCounterModal();
-                            },
-                          ),
-                          child: Text('Change page on which to search'),
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: MyCustomCard(
-                          child: ExpansionTileRules(),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                    AmountTabBar(
+                      bloc: bloc,
+                      tags: tags,
+                    ),
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: NsfwSfwRowFab(),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
         ),
       ),
-      drawer: const MyCustomDrawer(),
     );
   }
 }

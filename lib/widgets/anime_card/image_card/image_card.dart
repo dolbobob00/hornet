@@ -46,7 +46,7 @@ class ImageCard extends StatelessWidget {
               : CachedImage(
                   imageUrl: imageUrl,
                   width: width ?? double.infinity,
-                  height: height ?? MediaQuery.of(context).size.height * 0.45 + 40,
+                  height: height ?? MediaQuery.of(context).size.height * 0.45 + 30,
                   fit: fit ?? BoxFit.contain,
                 ),
         ),
