@@ -15,5 +15,7 @@ void main() async {
   if (lastTagData != null) {
     GetIt.I<IAnimeTags>().setLastTag = Map<String, dynamic>.from(lastTagData);
   }
-  runApp(const MainApp());
+  runApp(
+    const MainApp(),
+  );
 }

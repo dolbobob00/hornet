@@ -11,7 +11,7 @@ import '../presentation/pages/random_page/random_anime_page.dart';
 import '../presentation/pages/search_page/search_page.dart';
 
 class Routes {
-  GoRouter routerConfig = GoRouter(
+  static GoRouter routerConfig = GoRouter(
     routes: [
       GoRoute(
         path: '/',
