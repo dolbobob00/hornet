@@ -13,7 +13,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Routes routes = Routes();
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -31,7 +30,7 @@ class MainApp extends StatelessWidget {
       ],
       child: MaterialApp.router(
         title: 'Hornet(Love Rem)',
-        routerConfig: routes.routerConfig,
+        routerConfig: Routes.routerConfig,
         theme: AppTheme.lightTheme,
         debugShowCheckedModeBanner: false,
       ),
